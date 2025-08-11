@@ -9,10 +9,10 @@ object WFDensityFunctions {
     val AMPLIFIED_REGION = create("amplified_region")
     val NORMAL_REGION = create("normal_region")
 
-    val TEMPERATURE_WF = create("temperature_big")
-    val VEGETATION_WF = create("vegetation_big")
-    val CONTINENTS_WF = create("continents_big")
-    val EROSION_WF = create("erosion_big")
+    val TEMPERATURE_WF = create("temperature")
+    val VEGETATION_WF = create("vegetation")
+    val CONTINENTS_WF = create("continents")
+    val EROSION_WF = create("erosion")
 
     val OFFSET_MIX = create("offset_mix")
     val FACTOR_MIX = create("factor_mix")
@@ -25,5 +25,5 @@ object WFDensityFunctions {
     val I_D_W_J_AMPLIFIED = create("initial_density_without_jaggedness_amplified")
     val FINAL_DENSITY_MIX = create("final_density_mix")
 
-    fun create(id: String): RegistryKey<DensityFunction> = RegistryKey.of(RegistryKeys.DENSITY_FUNCTION, id(id))
+    private fun create(id: String): RegistryKey<DensityFunction> = RegistryKey.of(RegistryKeys.DENSITY_FUNCTION, id(id))
 }

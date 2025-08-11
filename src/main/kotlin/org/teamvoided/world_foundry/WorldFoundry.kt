@@ -11,6 +11,7 @@ object WorldFoundry {
 
     fun commonInit() {
         log.info("Founding Worlds!")
+        WFDensityFunction.init()
     }
 
     fun id(path: String): Identifier = Identifier.of(MODID, path)
