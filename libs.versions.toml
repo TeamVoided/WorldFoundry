@@ -2,10 +2,14 @@
 kotlin = "2.0.0"
 fabric-loom = "1.9-SNAPSHOT"
 iridium = "3.3.2"
+# Dependencies
+fzzy-config = "0.6.9+1.21"
 
 modmenu = "11.0.3"
 
 [libraries]
+# Dependencies
+fzzy-config = { module = "me.fzzyhmstrs:fzzy_config", version.ref = "fzzy-config" }
 modmenu = { module = "com.terraformersmc:modmenu", version.ref = "modmenu" }
 
 [plugins]

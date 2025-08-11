@@ -5,13 +5,12 @@ import net.minecraft.util.math.noise.DoublePerlinNoiseSampler.NoiseParameters
 import net.minecraft.world.biome.source.util.VanillaTerrainParametersCreator
 import net.minecraft.world.dimension.DimensionType
 import net.minecraft.world.gen.DensityFunction
-import net.minecraft.world.gen.DensityFunctions
 import net.minecraft.world.gen.DensityFunctions.*
 import net.minecraft.world.gen.OreVeinCreator.VeinType
 import net.minecraft.world.gen.noise.NoiseParametersKeys
 import net.minecraft.world.gen.noise.NoiseRouter
 import net.minecraft.world.gen.noise.NoiseRouterData
-import org.teamvoided.world_foundry.config.Config
+import org.teamvoided.world_foundry.config.WFConfig
 import org.teamvoided.world_foundry.data.world.WFDensityFunctions.AMPLIFIED_REGION
 import org.teamvoided.world_foundry.data.world.WFDensityFunctions.FINAL_DENSITY_MIX
 import org.teamvoided.world_foundry.data.world.WFDensityFunctions.CONTINENTS_WF
@@ -44,7 +43,7 @@ object DensityFunctionProvider {
                 multiply(
                     constant(3.0),
                     ShiftierNoise(
-                        multiply(constant(0.25), ConfigureDensityFunction(Config.AMPLIFIED_SIZE)),
+                        multiply(constant(0.25), ConfigureDensityFunction(WFConfig.AMPLIFIED_SIZE)),
                         noiseParams.getHolderOrThrow(AMPLIFIED_TRANSITION_NOISE)
                     )
                 ).clamp(0.0, 1.0)
@@ -67,7 +66,7 @@ object DensityFunctionProvider {
             TEMPERATURE_WF, ShiftierNoise(
                 shiftX,
                 shiftZ,
-                multiply(constant(0.25), ConfigureDensityFunction(Config.TEMPERATURE)),
+                multiply(constant(0.25), ConfigureDensityFunction(WFConfig.TEMPERATURE)),
                 noiseParams.getHolderOrThrow(NoiseParametersKeys.TEMPERATURE)
             )
         )
@@ -75,7 +74,7 @@ object DensityFunctionProvider {
             VEGETATION_WF, ShiftierNoise(
                 shiftX,
                 shiftZ,
-                multiply(constant(0.25), ConfigureDensityFunction(Config.HUMIDITY)),
+                multiply(constant(0.25), ConfigureDensityFunction(WFConfig.HUMIDITY)),
                 noiseParams.getHolderOrThrow(NoiseParametersKeys.VEGETATION)
             )
         )
@@ -83,7 +82,7 @@ object DensityFunctionProvider {
             CONTINENTS_WF, ShiftierNoise(
                 shiftX,
                 shiftZ,
-                multiply(constant(0.25), ConfigureDensityFunction(Config.CONTINENTALNESS)),
+                multiply(constant(0.25), ConfigureDensityFunction(WFConfig.CONTINENTALNESS)),
                 noiseParams.getHolderOrThrow(NoiseParametersKeys.CONTINENTALNESS)
             )
         )
@@ -91,7 +90,7 @@ object DensityFunctionProvider {
             EROSION_WF, ShiftierNoise(
                 shiftX,
                 shiftZ,
-                multiply(constant(0.25), ConfigureDensityFunction(Config.EROSION)),
+                multiply(constant(0.25), ConfigureDensityFunction(WFConfig.EROSION)),
                 noiseParams.getHolderOrThrow(NoiseParametersKeys.EROSION)
             )
         )

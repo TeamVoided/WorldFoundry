@@ -6,11 +6,11 @@ import net.minecraft.util.Identifier
 import net.minecraft.util.dynamic.CodecHolder
 import net.minecraft.world.gen.DensityFunction
 import net.minecraft.world.gen.DensityFunction.*
-import org.teamvoided.world_foundry.config.Config
+import org.teamvoided.world_foundry.WorldFoundry.CONFIG
 import java.util.*
 
 class ConfigureDensityFunction(val configId: Identifier) : SimpleFunction {
-    private val value: Double = Config.densityConfig[configId] ?: 1.0
+    private val value: Double = CONFIG.densityConfig[configId] ?: 1.0
 
     override fun compute(context: FunctionContext): Double = this.value
 
