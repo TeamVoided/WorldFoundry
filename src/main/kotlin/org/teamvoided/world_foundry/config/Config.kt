@@ -15,5 +15,6 @@ object Config {
         HUMIDITY to 1.0,
         EROSION to 1.0,
         CONTINENTALNESS to 1.0,
+        AMPLIFIED_SIZE to 1.0,
     )
 }

@@ -43,9 +43,9 @@ object DensityFunctionProvider {
             cache2D(
                 multiply(
                     constant(3.0),
-                    noise(
-                        noiseParams.getHolderOrThrow(AMPLIFIED_TRANSITION_NOISE),
-                        0.25, 0.0
+                    ShiftierNoise(
+                        multiply(constant(0.25), ConfigureDensityFunction(Config.AMPLIFIED_SIZE)),
+                        noiseParams.getHolderOrThrow(AMPLIFIED_TRANSITION_NOISE)
                     )
                 ).clamp(0.0, 1.0)
             )
