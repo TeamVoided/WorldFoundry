@@ -10,7 +10,11 @@ import org.teamvoided.world_foundry.WorldFoundry.CONFIG
 import java.util.*
 
 class ConfigureDensityFunction(val configId: Identifier) : SimpleFunction {
-    private val value: Double = CONFIG.densityConfig[configId] ?: 1.0
+    private val value: Double
+        get() {
+            val retorn = CONFIG.densityConfig[configId] ?: 1.0
+            return if (retorn == 0.0) 0.0 else 1.0 / retorn
+        }
 
     override fun compute(context: FunctionContext): Double = this.value
 

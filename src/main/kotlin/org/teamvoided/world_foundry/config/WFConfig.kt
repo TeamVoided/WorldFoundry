@@ -1,5 +1,6 @@
 package org.teamvoided.world_foundry.config
 
+import me.fzzyhmstrs.fzzy_config.annotations.Comment
 import me.fzzyhmstrs.fzzy_config.config.Config
 import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedMap
 import me.fzzyhmstrs.fzzy_config.validation.minecraft.ValidatedIdentifier
@@ -18,6 +19,7 @@ class WFConfig : Config(id(MODID)) {
         val AMPLIFIED_SIZE = id("amplified_size")
     }
 
+    @Comment("DO NOT REMOVE ANY OF THEM FROM THE LIST, THINGS WILL BREAK. Smaller values mean smaller biomes. 0 means the whole world will be the same.")
     var densityConfig = ValidatedMap.Builder<Identifier, Double>()
         .keyHandler(ValidatedIdentifier())
         .valueHandler(ValidatedDouble(1.0, 256.0, 0.0, ValidatedNumber.WidgetType.TEXTBOX_WITH_BUTTONS))
