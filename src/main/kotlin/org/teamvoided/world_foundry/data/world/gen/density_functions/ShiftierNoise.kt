@@ -4,10 +4,10 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.Holder
 import net.minecraft.util.KeyDispatchDataCodec
-import net.minecraft.world.level.levelgen.synth.NormalNoise
 import net.minecraft.world.level.levelgen.DensityFunction
 import net.minecraft.world.level.levelgen.DensityFunction.*
 import net.minecraft.world.level.levelgen.DensityFunctions
+import net.minecraft.world.level.levelgen.synth.NormalNoise
 
 class ShiftierNoise(
     val shiftX: DensityFunction,
@@ -15,14 +15,14 @@ class ShiftierNoise(
     val shiftZ: DensityFunction,
     val scaleXZ: DensityFunction,
     val scaleY: DensityFunction,
-    val noise: NoiseHolder
+    val noise: NoiseHolder,
 ) : DensityFunction {
 
     constructor(
         shiftX: DensityFunction,
         shiftZ: DensityFunction,
         scaleXZ: DensityFunction,
-        noise: Holder<NormalNoise.NoiseParameters>
+        noise: Holder<NormalNoise.NoiseParameters>,
     ) : this(
         shiftX,
         DensityFunctions.constant(0.0),
@@ -34,7 +34,7 @@ class ShiftierNoise(
 
     constructor(
         scaleXZ: DensityFunction,
-        noise: Holder<NormalNoise.NoiseParameters>
+        noise: Holder<NormalNoise.NoiseParameters>,
     ) : this(
         DensityFunctions.constant(0.0),
         DensityFunctions.constant(0.0),
@@ -73,17 +73,18 @@ class ShiftierNoise(
     override fun codec(): KeyDispatchDataCodec<out DensityFunction> = CODEC
 
     companion object {
-        private val DATA_CODEC: MapCodec<ShiftierNoise> =
-            RecordCodecBuilder.mapCodec { instance: RecordCodecBuilder.Instance<ShiftierNoise> ->
-                instance.group(
+        private val DATA_CODEC: MapCodec<ShiftierNoise> = RecordCodecBuilder.mapCodec { instance ->
+            instance
+                .group(
                     HOLDER_HELPER_CODEC.fieldOf("shift_x").forGetter { it.shiftX },
                     HOLDER_HELPER_CODEC.fieldOf("shift_y").forGetter { it.shiftY },
                     HOLDER_HELPER_CODEC.fieldOf("shift_z").forGetter { it.shiftZ },
                     HOLDER_HELPER_CODEC.fieldOf("scale_xz").forGetter { it.scaleXZ },
                     HOLDER_HELPER_CODEC.fieldOf("scale_y").forGetter { it.scaleY },
                     NoiseHolder.CODEC.fieldOf("noise").forGetter { it.noise }
-                ).apply(instance, ::ShiftierNoise)
-            }
+                )
+                .apply(instance, ::ShiftierNoise)
+        }
         val CODEC: KeyDispatchDataCodec<ShiftierNoise> = KeyDispatchDataCodec.of(DATA_CODEC)
     }
 }

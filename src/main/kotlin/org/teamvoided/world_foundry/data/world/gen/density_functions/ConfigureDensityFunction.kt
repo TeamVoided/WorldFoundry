@@ -29,12 +29,11 @@ class ConfigureDensityFunction(val configId: ResourceLocation) : SimpleFunction 
     override fun codec(): KeyDispatchDataCodec<out DensityFunction> = CODEC
 
     companion object {
-        private val DATA_CODEC: MapCodec<ConfigureDensityFunction> =
-            RecordCodecBuilder.mapCodec { instance ->
-                instance.group(
-                    ResourceLocation.CODEC.fieldOf("config_id").forGetter { it.configId })
-                    .apply(instance, ::ConfigureDensityFunction)
-            }
+        private val DATA_CODEC: MapCodec<ConfigureDensityFunction> = RecordCodecBuilder.mapCodec { instance ->
+            instance
+                .group(ResourceLocation.CODEC.fieldOf("config_id").forGetter { it.configId })
+                .apply(instance, ::ConfigureDensityFunction)
+        }
         val CODEC: KeyDispatchDataCodec<ConfigureDensityFunction> = KeyDispatchDataCodec.of(DATA_CODEC)
 
         //val ZERO: ConfigureDensityFunction = ConfigureDensityFunction()

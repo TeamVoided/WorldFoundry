@@ -9,7 +9,7 @@ import org.teamvoided.world_foundry.WorldFoundry.id
 import org.teamvoided.world_foundry.data.world.gen.density_functions.ConfigureDensityFunction
 import org.teamvoided.world_foundry.data.world.gen.density_functions.ShiftierNoise
 
-object WFDensityFunction {
+object WFDensityFunctionTypes {
 
     val SHIFTIER_NOISE = register("shiftier_noise", ShiftierNoise.CODEC)
     val CONFIGURE_DENSITY_FUNCTION = register("configure_density", ConfigureDensityFunction.CODEC)

@@ -7,12 +7,12 @@ import net.minecraft.world.level.biome.OverworldBiomeBuilder
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
 import net.minecraft.world.level.levelgen.NoiseSettings
 import net.minecraft.data.worldgen.SurfaceRuleData
-import org.teamvoided.world_foundry.data.world.WFChunkGeneratorSettings
+import org.teamvoided.world_foundry.data.world.WFNoiseSettings
 
 object ChunkGeneratorSettingsProvider {
     fun bootstrap(c: BootstrapContext<NoiseGeneratorSettings>) {
         c.register(
-            WFChunkGeneratorSettings.AMPLIFIED_MIXTURE,
+            WFNoiseSettings.AMPLIFIED_MIXTURE,
             createOverworldMixSettings(c)
         )
     }

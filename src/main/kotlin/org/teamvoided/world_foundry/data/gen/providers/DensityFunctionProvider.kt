@@ -30,7 +30,7 @@ import org.teamvoided.world_foundry.data.world.WFDensityFunctions.OFFSET_MIX
 import org.teamvoided.world_foundry.data.world.WFDensityFunctions.SLOPED_CHEESE_MIX
 import org.teamvoided.world_foundry.data.world.WFDensityFunctions.TEMPERATURE_WF
 import org.teamvoided.world_foundry.data.world.WFDensityFunctions.VEGETATION_WF
-import org.teamvoided.world_foundry.data.world.WFNoise.AMPLIFIED_TRANSITION_NOISE
+import org.teamvoided.world_foundry.data.world.WFNoises.AMPLIFIED_TRANSITION_NOISE
 import org.teamvoided.world_foundry.data.world.gen.density_functions.ConfigureDensityFunction
 import org.teamvoided.world_foundry.data.world.gen.density_functions.ShiftierNoise
 import java.util.stream.Stream

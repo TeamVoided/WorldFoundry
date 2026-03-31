@@ -14,15 +14,15 @@ import net.minecraft.world.level.dimension.LevelStem
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator
-import org.teamvoided.world_foundry.data.world.WFChunkGeneratorSettings
-import org.teamvoided.world_foundry.data.world.WFGeneratorTypes
+import org.teamvoided.world_foundry.data.world.WFNoiseSettings
+import org.teamvoided.world_foundry.data.world.WFWorldPresets
 import java.util.concurrent.CompletableFuture
 
 class WorldPresetTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
     FabricTagProvider<WorldPreset>(o, Registries.WORLD_PRESET, r) {
     override fun addTags(arg: HolderLookup.Provider) {
         tag(WorldPresetTags.NORMAL)
-            .add(WFGeneratorTypes.MIXED_AMPLIFIED)
+            .add(WFWorldPresets.MIXED_AMPLIFIED)
     }
 
     companion object {
@@ -32,7 +32,7 @@ class WorldPresetTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLo
             val biome = c.lookup(Registries.BIOME)
             val mnbpsl = c.lookup(Registries.MULTI_NOISE_BIOME_SOURCE_PARAMETER_LIST)
             c.register(
-                WFGeneratorTypes.MIXED_AMPLIFIED,
+                WFWorldPresets.MIXED_AMPLIFIED,
                 WorldPreset(
                     mapOf(
                         LevelStem.OVERWORLD to
@@ -42,7 +42,7 @@ class WorldPresetTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLo
                                         MultiNoiseBiomeSource.createFromPreset(
                                             mnbpsl.getOrThrow(MultiNoiseBiomeSourceParameterLists.OVERWORLD),
                                         ),
-                                        cgs.getOrThrow(WFChunkGeneratorSettings.AMPLIFIED_MIXTURE)
+                                        cgs.getOrThrow(WFNoiseSettings.AMPLIFIED_MIXTURE)
                                     )
                                 ),
                         LevelStem.NETHER to LevelStem(

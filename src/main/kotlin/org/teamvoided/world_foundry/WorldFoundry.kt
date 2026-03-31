@@ -16,7 +16,7 @@ object WorldFoundry {
 
     fun commonInit() {
         log.info("Founding Worlds!")
-        WFDensityFunction.init()
+        WFDensityFunctionTypes.init()
     }
 
     fun id(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MODID, path)
