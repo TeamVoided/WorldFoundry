@@ -7,7 +7,7 @@ import org.teamvoided.world_foundry.data.worldgen.WFNoises
 
 object NoiseCreator {
     fun bootstrap(c: BootstrapContext<NormalNoise.NoiseParameters>) {
-        c.register(WFNoises.AMPLIFIED_TRANSITION_NOISE, -9, 2.0, 0.0, 2.0, 1.0, 1.0)
+        c.register(WFNoises.AMPLIFIED_TRANSITION_NOISE, -10, 2.0, 0.0, 2.0, 1.0, 1.0)
     }
 
     private fun BootstrapContext<NormalNoise.NoiseParameters>.register(
