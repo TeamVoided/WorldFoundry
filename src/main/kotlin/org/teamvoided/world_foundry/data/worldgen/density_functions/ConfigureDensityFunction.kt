@@ -2,14 +2,14 @@ package org.teamvoided.world_foundry.data.worldgen.density_functions
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.util.KeyDispatchDataCodec
 import net.minecraft.world.level.levelgen.DensityFunction
 import net.minecraft.world.level.levelgen.DensityFunction.*
 import org.teamvoided.world_foundry.WorldFoundry
 import java.util.Arrays
 
-class ConfigureDensityFunction(val configId: ResourceLocation) : SimpleFunction {
+class ConfigureDensityFunction(val configId: Identifier) : SimpleFunction {
 
     private val value: Double
         get() {
@@ -32,7 +32,7 @@ class ConfigureDensityFunction(val configId: ResourceLocation) : SimpleFunction 
     companion object {
         private val DATA_CODEC: MapCodec<ConfigureDensityFunction> = RecordCodecBuilder.mapCodec { instance ->
             instance
-                .group(ResourceLocation.CODEC.fieldOf("config_id").forGetter { it.configId })
+                .group(Identifier.CODEC.fieldOf("config_id").forGetter { it.configId })
                 .apply(instance, ::ConfigureDensityFunction)
         }
         val CODEC: KeyDispatchDataCodec<ConfigureDensityFunction> = KeyDispatchDataCodec.of(DATA_CODEC)

@@ -2,18 +2,18 @@ package org.teamvoided.world_foundry.datagen.data.tags
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
-import net.minecraft.world.level.levelgen.presets.WorldPreset
-import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
+import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.tags.WorldPresetTags
 import net.minecraft.world.level.biome.MultiNoiseBiomeSource
-import net.minecraft.world.level.biome.TheEndBiomeSource
 import net.minecraft.world.level.biome.MultiNoiseBiomeSourceParameterLists
-import net.minecraft.world.level.dimension.LevelStem
+import net.minecraft.world.level.biome.TheEndBiomeSource
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes
-import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
+import net.minecraft.world.level.dimension.LevelStem
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator
+import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
+import net.minecraft.world.level.levelgen.presets.WorldPreset
 import org.teamvoided.world_foundry.data.worldgen.WFNoiseSettings
 import org.teamvoided.world_foundry.data.worldgen.WFWorldPresets
 import java.util.concurrent.CompletableFuture
@@ -22,7 +22,7 @@ class WorldPresetTagsProvider(o: FabricDataOutput, p: CompletableFuture<HolderLo
     FabricTagProvider<WorldPreset>(o, Registries.WORLD_PRESET, p) {
 
     override fun addTags(arg: HolderLookup.Provider) {
-        tag(WorldPresetTags.NORMAL).add(WFWorldPresets.MIXED_AMPLIFIED)
+        builder(WorldPresetTags.NORMAL).add(WFWorldPresets.MIXED_AMPLIFIED)
     }
 
     companion object {

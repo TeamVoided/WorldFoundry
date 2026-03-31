@@ -1,20 +1,20 @@
 package org.teamvoided.world_foundry.datagen
 
+import net.minecraft.util.BoundedFloatFunction
 import net.minecraft.util.CubicSpline
-import net.minecraft.util.ToFloatFunction
 import kotlin.math.min
 
 object MixinFunctions {
 
     @JvmStatic
-    fun <C, I : ToFloatFunction<C>> oceanFloorSpline(
+    fun <C : Any, I : BoundedFloatFunction<C>> oceanFloorSpline(
         ridgesFolded: I,
         pointLowest: Float,
         pointLow: Float,
         pointMiddle: Float,
         pointHigh: Float,
         pointHighest: Float,
-        amplifier: ToFloatFunction<Float>
+        amplifier: BoundedFloatFunction<Float>
     ): CubicSpline<C, I> {
         val derivative1 = (0.5f * (pointLow - pointLowest)).toDouble().toFloat()
         val derivative2 = 5.0f * (pointMiddle - pointLow)

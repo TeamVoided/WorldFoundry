@@ -43,11 +43,8 @@ dependencies {
     // Compatibility
     // Runtime
     modImplementation(libs.modmenu)
-    modCompileOnly("${libs.emi.get()}:api")
-    modLocalRuntime(libs.emi)
     // Testing
     modImplementation(libs.creative.works)
-    modImplementation(libs.imguimc)
 }
 
 val username = "vDev"
