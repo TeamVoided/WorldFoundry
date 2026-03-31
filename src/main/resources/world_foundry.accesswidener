@@ -1,27 +1,27 @@
 accessWidener v2 named
-accessible class net/minecraft/registry/RegistrySetBuilder$BuildState
-accessible method net/minecraft/world/gen/noise/NoiseRouterData overworld (Lnet/minecraft/registry/HolderProvider;Lnet/minecraft/registry/HolderProvider;ZZ)Lnet/minecraft/world/gen/noise/NoiseRouter;
-accessible field net/minecraft/world/gen/chunk/GenerationShapeConfig SURFACE Lnet/minecraft/world/gen/chunk/GenerationShapeConfig;
+accessible class net/minecraft/core/RegistrySetBuilder$BuildState
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData overworld (Lnet/minecraft/core/HolderGetter;Lnet/minecraft/core/HolderGetter;ZZ)Lnet/minecraft/world/level/levelgen/NoiseRouter;
+accessible field net/minecraft/world/level/levelgen/NoiseSettings OVERWORLD_NOISE_SETTINGS Lnet/minecraft/world/level/levelgen/NoiseSettings;
 
-accessible field net/minecraft/world/gen/noise/NoiseRouterData BASE_3D_NOISE_OVERWORLD Lnet/minecraft/registry/RegistryKey;
-accessible field net/minecraft/world/gen/noise/NoiseRouterData SHIFT_X Lnet/minecraft/registry/RegistryKey;
-accessible field net/minecraft/world/gen/noise/NoiseRouterData SHIFT_Z Lnet/minecraft/registry/RegistryKey;
-accessible field net/minecraft/world/gen/noise/NoiseRouterData CAVES_ENTRANCES_OVERWORLD Lnet/minecraft/registry/RegistryKey;
-accessible field net/minecraft/world/gen/noise/NoiseRouterData CAVES_NOODLE_OVERWORLD Lnet/minecraft/registry/RegistryKey;
-accessible field net/minecraft/world/gen/noise/NoiseRouterData Y Lnet/minecraft/registry/RegistryKey;
-accessible method net/minecraft/world/gen/noise/NoiseRouterData noiseGradientDensity (Lnet/minecraft/world/gen/DensityFunction;Lnet/minecraft/world/gen/DensityFunction;)Lnet/minecraft/world/gen/DensityFunction;
-accessible method net/minecraft/world/gen/noise/NoiseRouterData underground (Lnet/minecraft/registry/HolderProvider;Lnet/minecraft/registry/HolderProvider;Lnet/minecraft/world/gen/DensityFunction;)Lnet/minecraft/world/gen/DensityFunction;
-accessible method net/minecraft/world/gen/noise/NoiseRouterData postProcess (Lnet/minecraft/world/gen/DensityFunction;)Lnet/minecraft/world/gen/DensityFunction;
-accessible method net/minecraft/world/gen/noise/NoiseRouterData surfaceSlide (ZLnet/minecraft/world/gen/DensityFunction;)Lnet/minecraft/world/gen/DensityFunction;
-accessible method net/minecraft/world/gen/noise/NoiseRouterData yLimitedInterpolatable (Lnet/minecraft/world/gen/DensityFunction;Lnet/minecraft/world/gen/DensityFunction;III)Lnet/minecraft/world/gen/DensityFunction;
-accessible class net/minecraft/world/gen/OreVeinCreator$VeinType
-accessible field net/minecraft/world/gen/OreVeinCreator$VeinType minY I
-accessible field net/minecraft/world/gen/OreVeinCreator$VeinType maxY I
+accessible field net/minecraft/world/level/levelgen/NoiseRouterData BASE_3D_NOISE_OVERWORLD Lnet/minecraft/resources/ResourceKey;
+accessible field net/minecraft/world/level/levelgen/NoiseRouterData SHIFT_X Lnet/minecraft/resources/ResourceKey;
+accessible field net/minecraft/world/level/levelgen/NoiseRouterData SHIFT_Z Lnet/minecraft/resources/ResourceKey;
+accessible field net/minecraft/world/level/levelgen/NoiseRouterData ENTRANCES Lnet/minecraft/resources/ResourceKey;
+accessible field net/minecraft/world/level/levelgen/NoiseRouterData NOODLE Lnet/minecraft/resources/ResourceKey;
+accessible field net/minecraft/world/level/levelgen/NoiseRouterData Y Lnet/minecraft/resources/ResourceKey;
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData noiseGradientDensity (Lnet/minecraft/world/level/levelgen/DensityFunction;Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData underground (Lnet/minecraft/core/HolderGetter;Lnet/minecraft/core/HolderGetter;Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData postProcess (Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData slideOverworld (ZLnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData yLimitedInterpolatable (Lnet/minecraft/world/level/levelgen/DensityFunction;Lnet/minecraft/world/level/levelgen/DensityFunction;III)Lnet/minecraft/world/level/levelgen/DensityFunction;
+accessible class net/minecraft/world/level/levelgen/OreVeinifier$VeinType
+accessible field net/minecraft/world/level/levelgen/OreVeinifier$VeinType minY I
+accessible field net/minecraft/world/level/levelgen/OreVeinifier$VeinType maxY I
 
-accessible class net/minecraft/world/gen/DensityFunctions$Mapped
-accessible class net/minecraft/world/gen/DensityFunctions$Mapped$Type
+accessible class net/minecraft/world/level/levelgen/DensityFunctions$Mapped
+accessible class net/minecraft/world/level/levelgen/DensityFunctions$Mapped$Type
 
-accessible method net/minecraft/world/gen/noise/NoiseRouterData registerAndWrap (Lnet/minecraft/registry/BootstrapContext;Lnet/minecraft/registry/RegistryKey;Lnet/minecraft/world/gen/DensityFunction;)Lnet/minecraft/world/gen/DensityFunction;
-accessible method net/minecraft/world/gen/noise/NoiseRouterData splineWithBlending (Lnet/minecraft/world/gen/DensityFunction;Lnet/minecraft/world/gen/DensityFunction;)Lnet/minecraft/world/gen/DensityFunction;
-accessible field net/minecraft/world/gen/noise/NoiseRouterData BLENDING_FACTOR Lnet/minecraft/world/gen/DensityFunction;
-accessible field net/minecraft/world/gen/noise/NoiseRouterData BLENDING_JAGGEDNESS Lnet/minecraft/world/gen/DensityFunction;
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData registerAndWrap (Lnet/minecraft/data/worldgen/BootstrapContext;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData splineWithBlending (Lnet/minecraft/world/level/levelgen/DensityFunction;Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;
+accessible field net/minecraft/world/level/levelgen/NoiseRouterData BLENDING_FACTOR Lnet/minecraft/world/level/levelgen/DensityFunction;
+accessible field net/minecraft/world/level/levelgen/NoiseRouterData BLENDING_JAGGEDNESS Lnet/minecraft/world/level/levelgen/DensityFunction;

@@ -1,16 +1,16 @@
 package org.teamvoided.world_foundry.data.gen.providers
 
-import net.minecraft.block.Blocks
-import net.minecraft.registry.BootstrapContext
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.world.biome.source.util.OverworldBiomeParameters
-import net.minecraft.world.gen.chunk.ChunkGeneratorSettings
-import net.minecraft.world.gen.chunk.GenerationShapeConfig
-import net.minecraft.world.gen.surfacebuilder.VanillaSurfaceRules
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.core.registries.Registries
+import net.minecraft.world.level.biome.OverworldBiomeBuilder
+import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
+import net.minecraft.world.level.levelgen.NoiseSettings
+import net.minecraft.data.worldgen.SurfaceRuleData
 import org.teamvoided.world_foundry.data.world.WFChunkGeneratorSettings
 
 object ChunkGeneratorSettingsProvider {
-    fun bootstrap(c: BootstrapContext<ChunkGeneratorSettings>) {
+    fun bootstrap(c: BootstrapContext<NoiseGeneratorSettings>) {
         c.register(
             WFChunkGeneratorSettings.AMPLIFIED_MIXTURE,
             createOverworldMixSettings(c)
@@ -19,17 +19,17 @@ object ChunkGeneratorSettingsProvider {
 
     private fun createOverworldMixSettings(
         c: BootstrapContext<*>
-    ): ChunkGeneratorSettings {
-        return ChunkGeneratorSettings(
-            GenerationShapeConfig.SURFACE,
-            Blocks.STONE.defaultState,
-            Blocks.WATER.defaultState,
+    ): NoiseGeneratorSettings {
+        return NoiseGeneratorSettings(
+            NoiseSettings.OVERWORLD_NOISE_SETTINGS,
+            Blocks.STONE.defaultBlockState(),
+            Blocks.WATER.defaultBlockState(),
             DensityFunctionProvider.OverworldNoiseSettingsMakerAmplifiedMixture(
-                c.getRegistryLookup(RegistryKeys.DENSITY_FUNCTION),
-                c.getRegistryLookup(RegistryKeys.NOISE_PARAMETERS)
+                c.lookup(Registries.DENSITY_FUNCTION),
+                c.lookup(Registries.NOISE)
             ),
-            VanillaSurfaceRules.getOverworldRules(),
-            OverworldBiomeParameters().spawnSuitabilityNoises,
+            SurfaceRuleData.overworld(),
+            OverworldBiomeBuilder().spawnTarget(),
             63,
             false,
             true,

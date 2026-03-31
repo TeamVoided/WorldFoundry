@@ -6,7 +6,7 @@ import me.fzzyhmstrs.fzzy_config.validation.collection.ValidatedMap
 import me.fzzyhmstrs.fzzy_config.validation.minecraft.ValidatedIdentifier
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedDouble
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedNumber
-import net.minecraft.util.Identifier
+import net.minecraft.resources.ResourceLocation
 import org.teamvoided.world_foundry.WorldFoundry.MODID
 import org.teamvoided.world_foundry.WorldFoundry.id
 
@@ -20,7 +20,7 @@ class WFConfig : Config(id(MODID)) {
     }
 
     @Comment("DO NOT REMOVE ANY OF THEM FROM THE LIST, THINGS WILL BREAK. Smaller values mean smaller biomes. 0 means the whole world will be the same.")
-    var densityConfig = ValidatedMap.Builder<Identifier, Double>()
+    var densityConfig = ValidatedMap.Builder<ResourceLocation, Double>()
         .keyHandler(ValidatedIdentifier())
         .valueHandler(ValidatedDouble(1.0, 256.0, 0.0, ValidatedNumber.WidgetType.TEXTBOX_WITH_BUTTONS))
         .defaults(

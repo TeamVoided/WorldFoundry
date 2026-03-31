@@ -1,8 +1,8 @@
 package org.teamvoided.world_foundry.data.world
 
-import net.minecraft.client.world.GeneratorType
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
+import net.minecraft.world.level.levelgen.presets.WorldPreset
+import net.minecraft.resources.ResourceKey
+import net.minecraft.core.registries.Registries
 import org.teamvoided.world_foundry.WorldFoundry.id
 
 object WFGeneratorTypes {
@@ -10,5 +10,5 @@ object WFGeneratorTypes {
     // (ender) this is my world type ill do things with it later okay
     val ENDIFIED = create("endified")
 
-    fun create(id: String): RegistryKey<GeneratorType> = RegistryKey.of(RegistryKeys.GENERATOR_TYPE, id(id))
+    fun create(id: String): ResourceKey<WorldPreset> = ResourceKey.create(Registries.WORLD_PRESET, id(id))
 }

@@ -2,8 +2,8 @@ package org.teamvoided.world_foundry.data.gen
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.registry.RegistrySetBuilder
+import net.minecraft.core.registries.Registries
+import net.minecraft.core.RegistrySetBuilder
 import org.teamvoided.world_foundry.WorldFoundry.log
 import org.teamvoided.world_foundry.data.gen.providers.ChunkGeneratorSettingsProvider
 import org.teamvoided.world_foundry.data.gen.providers.DensityFunctionProvider
@@ -22,9 +22,9 @@ class WorldFoundryData : DataGeneratorEntrypoint {
     }
 
     override fun buildRegistry(gen: RegistrySetBuilder) {
-        gen.add(RegistryKeys.NOISE_PARAMETERS, NoiseCreator::bootstrap)
-        gen.add(RegistryKeys.DENSITY_FUNCTION, DensityFunctionProvider::bootstrap)
-        gen.add(RegistryKeys.GENERATOR_TYPE, WorldPresetTagsProvider::bootstrap)
-        gen.add(RegistryKeys.CHUNK_GENERATOR_SETTINGS, ChunkGeneratorSettingsProvider::bootstrap)
+        gen.add(Registries.NOISE, NoiseCreator::bootstrap)
+        gen.add(Registries.DENSITY_FUNCTION, DensityFunctionProvider::bootstrap)
+        gen.add(Registries.WORLD_PRESET, WorldPresetTagsProvider::bootstrap)
+        gen.add(Registries.NOISE_SETTINGS, ChunkGeneratorSettingsProvider::bootstrap)
     }
 }

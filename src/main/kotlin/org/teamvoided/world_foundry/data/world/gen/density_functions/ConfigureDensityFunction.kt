@@ -2,14 +2,14 @@ package org.teamvoided.world_foundry.data.world.gen.density_functions
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.util.Identifier
-import net.minecraft.util.dynamic.CodecHolder
-import net.minecraft.world.gen.DensityFunction
-import net.minecraft.world.gen.DensityFunction.*
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.util.KeyDispatchDataCodec
+import net.minecraft.world.level.levelgen.DensityFunction
+import net.minecraft.world.level.levelgen.DensityFunction.*
 import org.teamvoided.world_foundry.WorldFoundry.CONFIG
 import java.util.*
 
-class ConfigureDensityFunction(val configId: Identifier) : SimpleFunction {
+class ConfigureDensityFunction(val configId: ResourceLocation) : SimpleFunction {
     private val value: Double
         get() {
             val retorn = CONFIG.densityConfig[configId] ?: 1.0
@@ -26,16 +26,16 @@ class ConfigureDensityFunction(val configId: Identifier) : SimpleFunction {
 
     override fun maxValue(): Double = this.value
 
-    override fun codec(): CodecHolder<out DensityFunction> = CODEC
+    override fun codec(): KeyDispatchDataCodec<out DensityFunction> = CODEC
 
     companion object {
         private val DATA_CODEC: MapCodec<ConfigureDensityFunction> =
             RecordCodecBuilder.mapCodec { instance ->
                 instance.group(
-                    Identifier.CODEC.fieldOf("config_id").forGetter { it.configId })
+                    ResourceLocation.CODEC.fieldOf("config_id").forGetter { it.configId })
                     .apply(instance, ::ConfigureDensityFunction)
             }
-        val CODEC: CodecHolder<ConfigureDensityFunction> = CodecHolder.method_42116(DATA_CODEC)
+        val CODEC: KeyDispatchDataCodec<ConfigureDensityFunction> = KeyDispatchDataCodec.of(DATA_CODEC)
 
         //val ZERO: ConfigureDensityFunction = ConfigureDensityFunction()
     }

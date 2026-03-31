@@ -1,8 +1,8 @@
 package org.teamvoided.world_foundry.data.world
 
-import net.minecraft.registry.RegistryKey
-import net.minecraft.registry.RegistryKeys
-import net.minecraft.world.gen.DensityFunction
+import net.minecraft.resources.ResourceKey
+import net.minecraft.core.registries.Registries
+import net.minecraft.world.level.levelgen.DensityFunction
 import org.teamvoided.world_foundry.WorldFoundry.id
 
 object WFDensityFunctions {
@@ -25,5 +25,5 @@ object WFDensityFunctions {
     val I_D_W_J_AMPLIFIED = create("initial_density_without_jaggedness_amplified")
     val FINAL_DENSITY_MIX = create("final_density_mix")
 
-    private fun create(id: String): RegistryKey<DensityFunction> = RegistryKey.of(RegistryKeys.DENSITY_FUNCTION, id(id))
+    private fun create(id: String): ResourceKey<DensityFunction> = ResourceKey.create(Registries.DENSITY_FUNCTION, id(id))
 }

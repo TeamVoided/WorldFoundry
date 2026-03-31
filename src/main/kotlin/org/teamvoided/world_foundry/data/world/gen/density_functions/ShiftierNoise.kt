@@ -1,14 +1,13 @@
 package org.teamvoided.world_foundry.data.world.gen.density_functions
 
-import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.registry.Holder
-import net.minecraft.util.dynamic.CodecHolder
-import net.minecraft.util.math.noise.DoublePerlinNoiseSampler
-import net.minecraft.world.gen.DensityFunction
-import net.minecraft.world.gen.DensityFunction.*
-import net.minecraft.world.gen.DensityFunctions
+import net.minecraft.core.Holder
+import net.minecraft.util.KeyDispatchDataCodec
+import net.minecraft.world.level.levelgen.synth.NormalNoise
+import net.minecraft.world.level.levelgen.DensityFunction
+import net.minecraft.world.level.levelgen.DensityFunction.*
+import net.minecraft.world.level.levelgen.DensityFunctions
 
 class ShiftierNoise(
     val shiftX: DensityFunction,
@@ -23,7 +22,7 @@ class ShiftierNoise(
         shiftX: DensityFunction,
         shiftZ: DensityFunction,
         scaleXZ: DensityFunction,
-        noise: Holder<DoublePerlinNoiseSampler.NoiseParameters>
+        noise: Holder<NormalNoise.NoiseParameters>
     ) : this(
         shiftX,
         DensityFunctions.constant(0.0),
@@ -35,7 +34,7 @@ class ShiftierNoise(
 
     constructor(
         scaleXZ: DensityFunction,
-        noise: Holder<DoublePerlinNoiseSampler.NoiseParameters>
+        noise: Holder<NormalNoise.NoiseParameters>
     ) : this(
         DensityFunctions.constant(0.0),
         DensityFunctions.constant(0.0),
@@ -47,7 +46,7 @@ class ShiftierNoise(
         val d = context.blockX().toDouble() * this.scaleXZ.compute(context) + shiftX.compute(context)
         val e = context.blockY().toDouble() * this.scaleY.compute(context) + shiftY.compute(context)
         val f = context.blockZ().toDouble() * this.scaleXZ.compute(context) + shiftZ.compute(context)
-        return noise.sample(d, e, f)
+        return noise.getValue(d, e, f)
     }
 
     override fun fillArray(array: DoubleArray, context: ContextProvider) {
@@ -69,9 +68,9 @@ class ShiftierNoise(
 
     override fun minValue(): Double = -this.maxValue()
 
-    override fun maxValue(): Double = noise.maxValue
+    override fun maxValue(): Double = noise.maxValue()
 
-    override fun codec(): CodecHolder<out DensityFunction> = CODEC
+    override fun codec(): KeyDispatchDataCodec<out DensityFunction> = CODEC
 
     companion object {
         private val DATA_CODEC: MapCodec<ShiftierNoise> =
@@ -85,6 +84,6 @@ class ShiftierNoise(
                     NoiseHolder.CODEC.fieldOf("noise").forGetter { it.noise }
                 ).apply(instance, ::ShiftierNoise)
             }
-        val CODEC: CodecHolder<ShiftierNoise> = CodecHolder.method_42116(DATA_CODEC)
+        val CODEC: KeyDispatchDataCodec<ShiftierNoise> = KeyDispatchDataCodec.of(DATA_CODEC)
     }
 }
