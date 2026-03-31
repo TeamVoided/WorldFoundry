@@ -1,3 +1,4 @@
+
 package org.teamvoided.world_foundry
 
 import com.mojang.serialization.MapCodec
@@ -8,6 +9,7 @@ import org.teamvoided.world_foundry.WorldFoundry.id
 import org.teamvoided.world_foundry.data.worldgen.density_functions.ConfigureDensityFunction
 import org.teamvoided.world_foundry.data.worldgen.density_functions.ShiftierNoise
 
+@Suppress("unused")
 object WFDensityFunctionTypes {
 
     val SHIFTIER_NOISE = register("shiftier_noise", ShiftierNoise.CODEC)
