@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}_vdatagen",
+  "version": "${mod_version}",
+  "name": "${mod_name} Datagen",
+  "entrypoints": {
+    "fabric-datagen": [
+      {
+        "adapter": "kotlin",
+        "value": "org.teamvoided.world_foundry.datagen.WorldFoundryData"
+      }
+    ]
+  },
+  "mixins": [ "world_foundry.datagen.mixins.json" ]
+}

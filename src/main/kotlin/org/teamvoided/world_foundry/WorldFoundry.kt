@@ -13,7 +13,7 @@ object WorldFoundry {
 
     var CONFIG = ConfigApi.registerAndLoadConfig(::WFConfig)
 
-    fun commonInit() {
+    fun init() {
         log.info("Founding Worlds!")
         WFDensityFunctionTypes.init()
     }

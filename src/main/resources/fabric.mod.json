@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [ "${authors}" ],
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "org.teamvoided.world_foundry.WorldFoundry::init"
+      }
+    ]
+  },
+  "mixins": [
+    "world_foundry.mixins.json"
+  ],
+  "accessWidener": "world_foundry.classtweaker",
+  "depends": {
+    "java": ">=${java}",
+    "minecraft": ">=${min_minecraft} <${max_minecraft}",
+    "fabricloader": "*",
+    "fabric-api": "*",
+    "fabric-language-kotlin": ">=${fabric_kotlin}",
+    "fzzy_config": ">=${fzzy_config}"
+  },
+  "contact": {
+    "homepage": "https://github.com/${github_repo}",
+    "issues": "https://github.com/${github_repo}/issues",
+    "sources": "https://github.com/${github_repo}",
+    "discord": "${discord_invite}"
+  },
+  "license": "${license}",
+  "icon": "assets/world_foundry/icon.png"
+}

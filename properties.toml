@@ -1,0 +1,11 @@
+mod_name = "World Foundry"
+mod_id = "world_foundry"
+mod_group = "org.teamvoided"
+mod_version = "1.2.0"
+mod_description = "Adds a new world type to the create world screen."
+github_repo = "TeamVoided/WorldFoundry"
+discord_invite = "https://discord.gg/KZ5Q364hEg"
+authors = [ "DuskAutumnStorm", "TheEnderCore" ]
+license = "MIT"
+min_minecraft = "1.21.1" # Inclusive
+max_minecraft = "1.21.2" # Exclusive

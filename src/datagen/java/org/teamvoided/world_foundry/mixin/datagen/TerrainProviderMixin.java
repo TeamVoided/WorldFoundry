@@ -1,4 +1,4 @@
-package org.teamvoided.world_foundry.mixin;
+package org.teamvoided.world_foundry.mixin.datagen;
 
 import net.minecraft.data.worldgen.TerrainProvider;
 import net.minecraft.util.CubicSpline;
