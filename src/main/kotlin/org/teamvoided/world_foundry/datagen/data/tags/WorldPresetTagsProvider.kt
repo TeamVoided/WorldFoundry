@@ -14,8 +14,8 @@ import net.minecraft.world.level.dimension.LevelStem
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator
-import org.teamvoided.world_foundry.data.world.WFNoiseSettings
-import org.teamvoided.world_foundry.data.world.WFWorldPresets
+import org.teamvoided.world_foundry.data.worldgen.WFNoiseSettings
+import org.teamvoided.world_foundry.data.worldgen.WFWorldPresets
 import java.util.concurrent.CompletableFuture
 
 class WorldPresetTagsProvider(o: FabricDataOutput, p: CompletableFuture<HolderLookup.Provider>) :

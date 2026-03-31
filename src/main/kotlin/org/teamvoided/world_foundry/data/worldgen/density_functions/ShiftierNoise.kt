@@ -1,4 +1,4 @@
-package org.teamvoided.world_foundry.data.world.gen.density_functions
+package org.teamvoided.world_foundry.data.worldgen.density_functions
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder

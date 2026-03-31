@@ -5,8 +5,8 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.util.KeyDispatchDataCodec
 import net.minecraft.world.level.levelgen.DensityFunction
 import org.teamvoided.world_foundry.WorldFoundry.id
-import org.teamvoided.world_foundry.data.world.gen.density_functions.ConfigureDensityFunction
-import org.teamvoided.world_foundry.data.world.gen.density_functions.ShiftierNoise
+import org.teamvoided.world_foundry.data.worldgen.density_functions.ConfigureDensityFunction
+import org.teamvoided.world_foundry.data.worldgen.density_functions.ShiftierNoise
 
 object WFDensityFunctionTypes {
 

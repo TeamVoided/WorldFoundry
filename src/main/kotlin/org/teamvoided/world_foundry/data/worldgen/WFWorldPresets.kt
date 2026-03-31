@@ -1,4 +1,4 @@
-package org.teamvoided.world_foundry.data.world
+package org.teamvoided.world_foundry.data.worldgen
 
 import net.minecraft.core.registries.Registries
 import org.teamvoided.world_foundry.WorldFoundry.id

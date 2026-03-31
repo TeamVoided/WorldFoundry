@@ -15,10 +15,10 @@ import net.minecraft.world.level.levelgen.Noises
 import net.minecraft.world.level.levelgen.OreVeinifier
 import net.minecraft.world.level.levelgen.synth.NormalNoise
 import org.teamvoided.world_foundry.config.WFConfig
-import org.teamvoided.world_foundry.data.world.WFDensityFunctions
-import org.teamvoided.world_foundry.data.world.WFNoises
-import org.teamvoided.world_foundry.data.world.gen.density_functions.ConfigureDensityFunction
-import org.teamvoided.world_foundry.data.world.gen.density_functions.ShiftierNoise
+import org.teamvoided.world_foundry.data.worldgen.WFDensityFunctions
+import org.teamvoided.world_foundry.data.worldgen.WFNoises
+import org.teamvoided.world_foundry.data.worldgen.density_functions.ConfigureDensityFunction
+import org.teamvoided.world_foundry.data.worldgen.density_functions.ShiftierNoise
 import java.util.stream.Stream
 
 object DensityFunctionProvider {

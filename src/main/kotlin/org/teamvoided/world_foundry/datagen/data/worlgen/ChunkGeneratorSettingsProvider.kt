@@ -7,7 +7,7 @@ import net.minecraft.world.level.biome.OverworldBiomeBuilder
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
 import net.minecraft.world.level.levelgen.NoiseSettings
-import org.teamvoided.world_foundry.data.world.WFNoiseSettings
+import org.teamvoided.world_foundry.data.worldgen.WFNoiseSettings
 
 object ChunkGeneratorSettingsProvider {
     fun bootstrap(c: BootstrapContext<NoiseGeneratorSettings>) {

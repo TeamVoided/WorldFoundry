@@ -1,4 +1,4 @@
-package org.teamvoided.world_foundry.data.world.gen.density_functions
+package org.teamvoided.world_foundry.data.worldgen.density_functions
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
@@ -6,14 +6,14 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.KeyDispatchDataCodec
 import net.minecraft.world.level.levelgen.DensityFunction
 import net.minecraft.world.level.levelgen.DensityFunction.*
-import org.teamvoided.world_foundry.WorldFoundry.CONFIG
-import java.util.*
+import org.teamvoided.world_foundry.WorldFoundry
+import java.util.Arrays
 
 class ConfigureDensityFunction(val configId: ResourceLocation) : SimpleFunction {
 
     private val value: Double
         get() {
-            val retorn = CONFIG.densityConfig[configId] ?: 1.0
+            val retorn = WorldFoundry.CONFIG.densityConfig[configId] ?: 1.0
             return if (retorn == 0.0) 0.0 else 1.0 / retorn
         }
 

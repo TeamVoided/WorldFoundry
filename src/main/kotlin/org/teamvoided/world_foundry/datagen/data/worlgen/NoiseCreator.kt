@@ -3,7 +3,7 @@ package org.teamvoided.world_foundry.datagen.data.worlgen
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.levelgen.synth.NormalNoise
-import org.teamvoided.world_foundry.data.world.WFNoises
+import org.teamvoided.world_foundry.data.worldgen.WFNoises
 
 object NoiseCreator {
     fun bootstrap(c: BootstrapContext<NormalNoise.NoiseParameters>) {
