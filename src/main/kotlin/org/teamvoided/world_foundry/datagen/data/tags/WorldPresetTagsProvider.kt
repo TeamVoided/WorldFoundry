@@ -1,4 +1,4 @@
-package org.teamvoided.world_foundry.data.gen.providers.tags
+package org.teamvoided.world_foundry.datagen.data.tags
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
@@ -18,14 +18,15 @@ import org.teamvoided.world_foundry.data.world.WFNoiseSettings
 import org.teamvoided.world_foundry.data.world.WFWorldPresets
 import java.util.concurrent.CompletableFuture
 
-class WorldPresetTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLookup.Provider>) :
-    FabricTagProvider<WorldPreset>(o, Registries.WORLD_PRESET, r) {
+class WorldPresetTagsProvider(o: FabricDataOutput, p: CompletableFuture<HolderLookup.Provider>) :
+    FabricTagProvider<WorldPreset>(o, Registries.WORLD_PRESET, p) {
+
     override fun addTags(arg: HolderLookup.Provider) {
-        tag(WorldPresetTags.NORMAL)
-            .add(WFWorldPresets.MIXED_AMPLIFIED)
+        tag(WorldPresetTags.NORMAL).add(WFWorldPresets.MIXED_AMPLIFIED)
     }
 
     companion object {
+
         fun bootstrap(c: BootstrapContext<WorldPreset>) {
             val dim = c.lookup(Registries.DIMENSION_TYPE)
             val cgs = c.lookup(Registries.NOISE_SETTINGS)
@@ -64,5 +65,6 @@ class WorldPresetTagsProvider(o: FabricDataOutput, r: CompletableFuture<HolderLo
                 )
             )
         }
+
     }
 }

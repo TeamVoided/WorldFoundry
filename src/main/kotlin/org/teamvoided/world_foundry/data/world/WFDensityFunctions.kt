@@ -1,11 +1,11 @@
 package org.teamvoided.world_foundry.data.world
 
-import net.minecraft.resources.ResourceKey
 import net.minecraft.core.registries.Registries
-import net.minecraft.world.level.levelgen.DensityFunction
 import org.teamvoided.world_foundry.WorldFoundry.id
+import org.teamvoided.world_foundry.key
 
 object WFDensityFunctions {
+
     val AMPLIFIED_REGION = create("amplified_region")
     val NORMAL_REGION = create("normal_region")
 
@@ -25,5 +25,6 @@ object WFDensityFunctions {
     val I_D_W_J_AMPLIFIED = create("initial_density_without_jaggedness_amplified")
     val FINAL_DENSITY_MIX = create("final_density_mix")
 
-    private fun create(id: String): ResourceKey<DensityFunction> = ResourceKey.create(Registries.DENSITY_FUNCTION, id(id))
+    fun create(id: String) = Registries.DENSITY_FUNCTION.key(id(id))
+
 }

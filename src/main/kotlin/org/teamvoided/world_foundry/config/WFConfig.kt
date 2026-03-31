@@ -11,12 +11,15 @@ import org.teamvoided.world_foundry.WorldFoundry.MODID
 import org.teamvoided.world_foundry.WorldFoundry.id
 
 class WFConfig : Config(id(MODID)) {
+
     companion object {
+
         val TEMPERATURE = id("temperature")
         val HUMIDITY = id("humidity")
         val EROSION = id("erosion")
         val CONTINENTALNESS = id("continentalness")
         val AMPLIFIED_SIZE = id("amplified_size")
+
     }
 
     @Comment("DO NOT REMOVE ANY OF THEM FROM THE LIST, THINGS WILL BREAK. Smaller values mean smaller biomes. 0 means the whole world will be the same.")
@@ -29,5 +32,7 @@ class WFConfig : Config(id(MODID)) {
             EROSION to 1.0,
             CONTINENTALNESS to 1.0,
             AMPLIFIED_SIZE to 1.0,
-        ).build()
+        )
+        .build()
+
 }

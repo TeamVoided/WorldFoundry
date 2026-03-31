@@ -10,6 +10,7 @@ import org.teamvoided.world_foundry.WorldFoundry.CONFIG
 import java.util.*
 
 class ConfigureDensityFunction(val configId: ResourceLocation) : SimpleFunction {
+
     private val value: Double
         get() {
             val retorn = CONFIG.densityConfig[configId] ?: 1.0

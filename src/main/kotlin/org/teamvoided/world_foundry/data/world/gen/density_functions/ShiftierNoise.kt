@@ -73,6 +73,7 @@ class ShiftierNoise(
     override fun codec(): KeyDispatchDataCodec<out DensityFunction> = CODEC
 
     companion object {
+
         private val DATA_CODEC: MapCodec<ShiftierNoise> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
@@ -85,6 +86,8 @@ class ShiftierNoise(
                 )
                 .apply(instance, ::ShiftierNoise)
         }
+
         val CODEC: KeyDispatchDataCodec<ShiftierNoise> = KeyDispatchDataCodec.of(DATA_CODEC)
+
     }
 }

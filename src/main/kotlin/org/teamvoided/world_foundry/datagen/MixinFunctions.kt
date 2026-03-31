@@ -1,7 +1,7 @@
-package org.teamvoided.world_foundry.data.gen.providers
+package org.teamvoided.world_foundry.datagen
 
-import net.minecraft.util.ToFloatFunction
 import net.minecraft.util.CubicSpline
+import net.minecraft.util.ToFloatFunction
 import kotlin.math.min
 
 object MixinFunctions {

@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.teamvoided.world_foundry.data.gen.providers.MixinFunctions;
+import org.teamvoided.world_foundry.datagen.MixinFunctions;
 
 @Mixin(TerrainProvider.class)
 public abstract class TerrainProviderMixin {

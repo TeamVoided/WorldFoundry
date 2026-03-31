@@ -1,12 +1,12 @@
-package org.teamvoided.world_foundry.data.gen.providers
+package org.teamvoided.world_foundry.datagen.data.worlgen
 
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.core.registries.Registries
+import net.minecraft.data.worldgen.BootstrapContext
+import net.minecraft.data.worldgen.SurfaceRuleData
 import net.minecraft.world.level.biome.OverworldBiomeBuilder
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
 import net.minecraft.world.level.levelgen.NoiseSettings
-import net.minecraft.data.worldgen.SurfaceRuleData
 import org.teamvoided.world_foundry.data.world.WFNoiseSettings
 
 object ChunkGeneratorSettingsProvider {
