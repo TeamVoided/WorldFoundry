@@ -2,15 +2,27 @@
 
 package org.teamvoided.world_foundry
 
+import com.google.gson.JsonElement
+import com.mojang.serialization.JsonOps
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
-import net.minecraft.data.worldgen.placement.PlacementUtils
+import net.minecraft.data.worldgen.placement.PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT
 import net.minecraft.resources.Identifier
+import net.minecraft.resources.RegistryOps
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
+import net.minecraft.world.level.levelgen.VerticalAnchor
+import net.minecraft.world.level.levelgen.heightproviders.TrapezoidHeight
+import net.minecraft.world.level.levelgen.placement.CountPlacement
+import net.minecraft.world.level.levelgen.placement.HeightRangePlacement
+import net.minecraft.world.level.levelgen.placement.HeightmapPlacement
+import net.minecraft.world.level.levelgen.placement.PlacedFeature
+import net.minecraft.world.level.levelgen.placement.PlacementModifier
+import org.teamvoided.world_foundry.WorldFoundry.log
 import kotlin.jvm.optionals.getOrNull
 
 
@@ -28,43 +40,54 @@ fun evilFunction(frozen: RegistryAccess.Frozen) {
 //    val sw = Stopwatch.createStarted()
 
     val feat = frozen.lookupOrThrow(Registries.PLACED_FEATURE)
-    println("Processing features: ${feat.size()}")
+    val ops = frozen.createSerializationContext(JsonOps.INSTANCE)
+    log.info("Processing features: {}", feat.size())
 
-    val keys = feat.entrySet().stream()
+    val keys = feat.entrySet()
+        .stream()
         .map { it.key }
         .sorted(Comparator.comparingInt { feat.getId(feat.getValueOrThrow(it)) })
-        .toList()
 
     for (key in keys) {
-        val feature = feat.getOptional(key).getOrNull() ?: continue
+        val feature = feat.getValueOrThrow(key)
 
         val otherList = feature.placement.toMutableList()
         var mod = false
-        if (feature.placement.contains(PlacementUtils.HEIGHTMAP)) {
-            otherList.remove(PlacementUtils.HEIGHTMAP)
-            mod = true
-        }
-        if (feature.placement.contains(PlacementUtils.HEIGHTMAP_NO_LEAVES)) {
-            otherList.remove(PlacementUtils.HEIGHTMAP_NO_LEAVES)
-            mod = true
-        }
-        if (feature.placement.contains(PlacementUtils.HEIGHTMAP_TOP_SOLID)) {
-            otherList.remove(PlacementUtils.HEIGHTMAP_TOP_SOLID)
-            mod = true
-        }
-        if (feature.placement.contains(PlacementUtils.HEIGHTMAP_WORLD_SURFACE)) {
-            otherList.remove(PlacementUtils.HEIGHTMAP_WORLD_SURFACE)
-            mod = true
-        }
-        if (feature.placement.contains(PlacementUtils.HEIGHTMAP_OCEAN_FLOOR)) {
-            otherList.remove(PlacementUtils.HEIGHTMAP_OCEAN_FLOOR)
-            mod = true
+        val shouldRemove = mutableListOf<PlacementModifier>()
+        for (modifier in feature.placement) {
+            if (modifier is HeightmapPlacement) {
+                otherList.remove(modifier)
+                mod = true
+            }
+            if (modifier is CountPlacement) {
+                shouldRemove.add(modifier)
+            }
         }
 
         if (mod) {
-            otherList.add(PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT)
+            otherList.removeAll(shouldRemove::contains)
+            otherList.addAll(getHeightPlaceMod())
             feature.placement = otherList.toList()
+            log.info("Modified: {}", key)
         }
 
     }
+}
+
+val CUSTOM_RANGE =
+    HeightRangePlacement.of(TrapezoidHeight.of(VerticalAnchor.absolute(54), VerticalAnchor.absolute(90), 75))
+
+fun getHeightPlaceMod(): List<PlacementModifier> {
+
+    return listOf(
+        /*  EnvironmentScanPlacement.scanningFor(
+              Direction.DOWN,
+              BlockPredicate.solid(),
+              BlockPredicate.ONLY_IN_AIR_PREDICATE,
+              12
+          ),*/
+        CountPlacement.of(128),
+        RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT
+    )
+//    return CountOnEveryLayerPlacement.of(1)
 }

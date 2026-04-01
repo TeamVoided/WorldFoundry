@@ -1,7 +1,6 @@
 package org.teamvoided.world_foundry
 
 import me.fzzyhmstrs.fzzy_config.api.ConfigApi
-import net.fabricmc.fabric.api.biome.v1.BiomeModification
 import net.minecraft.resources.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
