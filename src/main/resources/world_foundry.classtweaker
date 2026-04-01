@@ -25,3 +25,8 @@ accessible method net/minecraft/world/level/levelgen/NoiseRouterData registerAnd
 accessible method net/minecraft/world/level/levelgen/NoiseRouterData splineWithBlending (Lnet/minecraft/world/level/levelgen/DensityFunction;Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;
 accessible field net/minecraft/world/level/levelgen/NoiseRouterData BLENDING_FACTOR Lnet/minecraft/world/level/levelgen/DensityFunction;
 accessible field net/minecraft/world/level/levelgen/NoiseRouterData BLENDING_JAGGEDNESS Lnet/minecraft/world/level/levelgen/DensityFunction;
+
+
+# ender dark magic
+accessible field net/minecraft/world/level/levelgen/placement/PlacedFeature placement Ljava/util/List;
+mutable field net/minecraft/world/level/levelgen/placement/PlacedFeature placement Ljava/util/List;
