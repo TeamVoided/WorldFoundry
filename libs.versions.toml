@@ -13,7 +13,7 @@
     # Runtime
     modmenu = "17.0.0"
     # Testing
-    creative_works = "0.5.0+1.21.11"
+    creative_works = "0.5.1+1.21.11"
 
 [libraries]
     # Dependencies
