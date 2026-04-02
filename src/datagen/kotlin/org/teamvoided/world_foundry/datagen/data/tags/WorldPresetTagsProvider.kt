@@ -6,6 +6,8 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.tags.WorldPresetTags
+import net.minecraft.world.level.biome.Biomes
+import net.minecraft.world.level.biome.FixedBiomeSource
 import net.minecraft.world.level.biome.MultiNoiseBiomeSource
 import net.minecraft.world.level.biome.MultiNoiseBiomeSourceParameterLists
 import net.minecraft.world.level.biome.TheEndBiomeSource
@@ -22,7 +24,11 @@ class WorldPresetTagsProvider(o: FabricDataOutput, p: CompletableFuture<HolderLo
     FabricTagProvider<WorldPreset>(o, Registries.WORLD_PRESET, p) {
 
     override fun addTags(arg: HolderLookup.Provider) {
-        builder(WorldPresetTags.NORMAL).add(WFWorldPresets.MIXED_AMPLIFIED)
+        builder(WorldPresetTags.NORMAL)
+            .add(
+                WFWorldPresets.MIXED_AMPLIFIED,
+                WFWorldPresets.CAVE_WORLD
+            )
     }
 
     companion object {
@@ -49,8 +55,45 @@ class WorldPresetTagsProvider(o: FabricDataOutput, p: CompletableFuture<HolderLo
                         LevelStem.NETHER to LevelStem(
                             dim.getOrThrow(BuiltinDimensionTypes.NETHER),
                             NoiseBasedChunkGenerator(
-                                MultiNoiseBiomeSource.createFromPreset(mnbpsl.getOrThrow(
-                                    MultiNoiseBiomeSourceParameterLists.NETHER)),
+                                MultiNoiseBiomeSource.createFromPreset(
+                                    mnbpsl.getOrThrow(
+                                        MultiNoiseBiomeSourceParameterLists.NETHER
+                                    )
+                                ),
+                                cgs.getOrThrow(NoiseGeneratorSettings.NETHER)
+                            )
+                        ),
+                        LevelStem.END to LevelStem(
+                            dim.getOrThrow(BuiltinDimensionTypes.END),
+                            NoiseBasedChunkGenerator(
+                                TheEndBiomeSource.create(biome),
+                                cgs.getOrThrow(NoiseGeneratorSettings.END)
+                            )
+                        )
+                    )
+                )
+            )
+
+            c.register(
+                WFWorldPresets.CAVE_WORLD,
+                WorldPreset(
+                    mapOf(
+                        LevelStem.OVERWORLD to
+                                LevelStem(
+                                    dim.getOrThrow(BuiltinDimensionTypes.OVERWORLD_CAVES),
+                                    NoiseBasedChunkGenerator(
+                                        FixedBiomeSource(biome.getOrThrow(Biomes.PALE_GARDEN)),
+                                        cgs.getOrThrow(WFNoiseSettings.CAVE_WORLD)
+                                    )
+                                ),
+                        LevelStem.NETHER to LevelStem(
+                            dim.getOrThrow(BuiltinDimensionTypes.NETHER),
+                            NoiseBasedChunkGenerator(
+                                MultiNoiseBiomeSource.createFromPreset(
+                                    mnbpsl.getOrThrow(
+                                        MultiNoiseBiomeSourceParameterLists.NETHER
+                                    )
+                                ),
                                 cgs.getOrThrow(NoiseGeneratorSettings.NETHER)
                             )
                         ),

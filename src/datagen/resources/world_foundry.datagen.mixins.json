@@ -4,7 +4,7 @@
   "package": "org.teamvoided.world_foundry.mixin.datagen",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "UkMixin"
+    "TerrainProviderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -7,6 +7,7 @@ import org.teamvoided.world_foundry.key
 object WFWorldPresets {
 
     val MIXED_AMPLIFIED = create("mixed_amplified")
+    val CAVE_WORLD = create("cave_world")
 
     // (ender) this is my world type ill do things with it later okay
     val ENDIFIED = create("endified")

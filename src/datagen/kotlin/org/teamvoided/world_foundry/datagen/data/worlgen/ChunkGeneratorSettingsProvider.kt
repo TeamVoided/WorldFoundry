@@ -6,6 +6,7 @@ import net.minecraft.data.worldgen.SurfaceRuleData
 import net.minecraft.world.level.biome.OverworldBiomeBuilder
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
+import net.minecraft.world.level.levelgen.NoiseRouterData
 import net.minecraft.world.level.levelgen.NoiseSettings
 import org.teamvoided.world_foundry.data.worldgen.WFNoiseSettings
 
@@ -15,10 +16,27 @@ object ChunkGeneratorSettingsProvider {
             WFNoiseSettings.AMPLIFIED_MIXTURE,
             createOverworldMixSettings(c)
         )
+
+        c.register(
+            WFNoiseSettings.CAVE_WORLD,
+            NoiseGeneratorSettings(
+                NoiseSettings.create(-128, 256, 1, 2),
+                Blocks.STONE.defaultBlockState(),
+                Blocks.WATER.defaultBlockState(),
+                NoiseRouterData.caves(c.lookup(Registries.DENSITY_FUNCTION), c.lookup(Registries.NOISE)),
+                SurfaceRuleData.overworld(),
+                OverworldBiomeBuilder().spawnTarget(),
+                -24,
+                false, // disableMobGeneration
+                true, // aquifersEnabled
+                true, // oreVeinsEnabled
+                false // useLegacyRandomSource
+            )
+        )
     }
 
     private fun createOverworldMixSettings(
-        c: BootstrapContext<*>
+        c: BootstrapContext<*>,
     ): NoiseGeneratorSettings {
         return NoiseGeneratorSettings(
             NoiseSettings.OVERWORLD_NOISE_SETTINGS,
