@@ -31,3 +31,5 @@ accessible field net/minecraft/world/level/levelgen/NoiseRouterData BLENDING_JAG
 # ender dark magic
 accessible field net/minecraft/world/level/levelgen/placement/PlacedFeature placement Ljava/util/List;
 mutable field net/minecraft/world/level/levelgen/placement/PlacedFeature placement Ljava/util/List;
+
+accessible field net/minecraft/world/level/levelgen/placement/HeightmapPlacement heightmap Lnet/minecraft/world/level/levelgen/Heightmap$Types;

@@ -1,6 +1,7 @@
 package org.teamvoided.world_foundry.worldgen
 
 import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.BlockPos
 import net.minecraft.core.BlockPos.MutableBlockPos
 import net.minecraft.util.RandomSource
@@ -15,12 +16,21 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifierType
 import org.teamvoided.world_foundry.init.WFPlacementModifierTypes
 import java.util.stream.Stream
 
-class CountOnFixedLayersPlacement private constructor(private val count: IntProvider) : PlacementModifier() {
+class CountOnFixedLayersPlacement(val count: IntProvider, val heightmap: Heightmap.Types) : PlacementModifier() {
 
     override fun type(): PlacementModifierType<*> = WFPlacementModifierTypes.COUNT_ON_FIXED_LAYERS
 
     override fun getPositions(context: PlacementContext, random: RandomSource, pos: BlockPos): Stream<BlockPos> {
         val builder = Stream.builder<BlockPos>()
+
+        val x = pos.x
+        val z = pos.z
+        val y = context.getHeight(this.heightmap, x, z)
+        if (y > context.minY) {
+            builder.add(BlockPos(x, y, z))
+        }
+//        return  builder.build()
+
         var iteration = 0
 
         var shouldLoop: Boolean
@@ -28,11 +38,11 @@ class CountOnFixedLayersPlacement private constructor(private val count: IntProv
             shouldLoop = false
 
             for (j in 0..<this.count.sample(random)) {
-                val x = random.nextInt(16) + pos.x
-                val z = random.nextInt(16) + pos.z
-                val y = context.getHeight(Heightmap.Types.WORLD_SURFACE_WG, x, z)
-                val sampledY = findOnGroundYPosition(context, x, y, z, iteration)
-                if (sampledY != Int.MAX_VALUE) {
+//                val x = random.nextInt(16) + pos.x
+//                val z = random.nextInt(16) + pos.z
+//                val y = context.getHeight(Heightmap.Types.WORLD_SURFACE_WG, x, z)
+                val sampledY = findOnGroundYPosition(context, x, y - 2, z, iteration)
+                if (sampledY != null) {
                     builder.add(BlockPos(x, sampledY, z))
                     shouldLoop = true
                 }
@@ -46,15 +56,24 @@ class CountOnFixedLayersPlacement private constructor(private val count: IntProv
 
 
     companion object {
-        val CODEC: MapCodec<CountOnFixedLayersPlacement> = IntProvider.codec(0, 256)
-            .fieldOf("count")
-            .xmap(::CountOnFixedLayersPlacement) { it.count }
 
-        fun of(provider: IntProvider): CountOnFixedLayersPlacement = CountOnFixedLayersPlacement(provider)
+        val CODEC: MapCodec<CountOnFixedLayersPlacement> = RecordCodecBuilder.mapCodec { instance ->
+            instance
+                .group(
+                    IntProvider.codec(0, 256).fieldOf("count").forGetter { it.count },
+                    Heightmap.Types.CODEC.fieldOf("heightmap").forGetter { it.heightmap }
+                )
+                .apply(instance, ::CountOnFixedLayersPlacement)
+        }
 
-        fun of(i: Int): CountOnFixedLayersPlacement = of(ConstantInt.of(i))
 
-        fun findOnGroundYPosition(context: PlacementContext, x: Int, y: Int, z: Int, iteration: Int): Int {
+        fun of(provider: IntProvider, heightmap: Heightmap.Types): CountOnFixedLayersPlacement {
+            return CountOnFixedLayersPlacement(provider, heightmap)
+        }
+
+        fun of(i: Int, heightmap: Heightmap.Types) = of(ConstantInt.of(i), heightmap)
+
+        fun findOnGroundYPosition(context: PlacementContext, x: Int, y: Int, z: Int, iteration: Int): Int? {
             val mutPos = MutableBlockPos(x, y, z)
             var m = 0
             var originState = context.getBlockState(mutPos)
@@ -73,7 +92,7 @@ class CountOnFixedLayersPlacement private constructor(private val count: IntProv
                 originState = state
             }
 
-            return Int.MAX_VALUE
+            return null
         }
 
         fun isEmpty(blockState: BlockState): Boolean {
