@@ -2,28 +2,20 @@
 
 package org.teamvoided.world_foundry
 
-import com.google.gson.JsonElement
 import com.mojang.serialization.JsonOps
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
-import net.minecraft.data.worldgen.placement.PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT
 import net.minecraft.resources.Identifier
-import net.minecraft.resources.RegistryOps
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.heightproviders.TrapezoidHeight
-import net.minecraft.world.level.levelgen.placement.CountPlacement
-import net.minecraft.world.level.levelgen.placement.HeightRangePlacement
-import net.minecraft.world.level.levelgen.placement.HeightmapPlacement
-import net.minecraft.world.level.levelgen.placement.PlacedFeature
-import net.minecraft.world.level.levelgen.placement.PlacementModifier
+import net.minecraft.world.level.levelgen.placement.*
 import org.teamvoided.world_foundry.WorldFoundry.log
-import kotlin.jvm.optionals.getOrNull
+import org.teamvoided.world_foundry.worldgen.CountOnFixedLayersPlacement
 
 
 fun isDev() = FabricLoader.getInstance().isDevelopmentEnvironment
@@ -86,8 +78,10 @@ fun getHeightPlaceMod(): List<PlacementModifier> {
               BlockPredicate.ONLY_IN_AIR_PREDICATE,
               12
           ),*/
-        CountPlacement.of(128),
-        RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT
+//        CountPlacement.of(20),
+        CountOnFixedLayersPlacement.of(1)
+//        CountOnEveryLayerPlacement.of(1)
+//        RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT
     )
 //    return CountOnEveryLayerPlacement.of(1)
 }

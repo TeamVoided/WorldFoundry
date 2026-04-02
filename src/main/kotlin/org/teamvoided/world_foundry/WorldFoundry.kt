@@ -5,6 +5,8 @@ import net.minecraft.resources.Identifier
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.teamvoided.world_foundry.config.WFConfig
+import org.teamvoided.world_foundry.init.WFDensityFunctionTypes
+import org.teamvoided.world_foundry.init.WFPlacementModifierTypes
 
 @Suppress("unused")
 object WorldFoundry {
@@ -16,6 +18,7 @@ object WorldFoundry {
     fun init() {
         log.info("Founding Worlds!")
         WFDensityFunctionTypes.init()
+        WFPlacementModifierTypes.init()
     }
 
     fun id(path: String): Identifier = Identifier.fromNamespaceAndPath(MODID, path)

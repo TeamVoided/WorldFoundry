@@ -1,13 +1,14 @@
-
-package org.teamvoided.world_foundry
+package org.teamvoided.world_foundry.init
 
 import com.mojang.serialization.MapCodec
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.util.KeyDispatchDataCodec
 import net.minecraft.world.level.levelgen.DensityFunction
+import org.teamvoided.world_foundry.WorldFoundry
 import org.teamvoided.world_foundry.WorldFoundry.id
 import org.teamvoided.world_foundry.data.worldgen.density_functions.ConfigureDensityFunction
 import org.teamvoided.world_foundry.data.worldgen.density_functions.ShiftierNoise
+import org.teamvoided.world_foundry.register
 
 @Suppress("unused")
 object WFDensityFunctionTypes {
