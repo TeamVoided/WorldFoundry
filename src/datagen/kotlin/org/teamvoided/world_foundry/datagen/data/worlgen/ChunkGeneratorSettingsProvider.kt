@@ -26,9 +26,9 @@ object ChunkGeneratorSettingsProvider {
                 NoiseRouterData.caves(c.lookup(Registries.DENSITY_FUNCTION), c.lookup(Registries.NOISE)),
                 SurfaceRuleData.overworld(),
                 OverworldBiomeBuilder().spawnTarget(),
-                -24,
+                12,
                 false, // disableMobGeneration
-                true, // aquifersEnabled
+                false, // aquifersEnabled
                 true, // oreVeinsEnabled
                 false // useLegacyRandomSource
             )

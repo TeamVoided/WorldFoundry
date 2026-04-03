@@ -6,11 +6,11 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifier
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType
 import org.teamvoided.world_foundry.WorldFoundry.id
 import org.teamvoided.world_foundry.register
-import org.teamvoided.world_foundry.worldgen.CountOnFixedLayersPlacement
+import org.teamvoided.world_foundry.worldgen.UnderPlacementFixer
 
 object WFPlacementModifierTypes {
 
-    val COUNT_ON_FIXED_LAYERS = register("count_on_fixed_layers", CountOnFixedLayersPlacement.CODEC)
+    val UNDER_PLACEMENT_FIXER = register("under_placement_fixer", UnderPlacementFixer.CODEC)
 
     fun init() = Unit
 

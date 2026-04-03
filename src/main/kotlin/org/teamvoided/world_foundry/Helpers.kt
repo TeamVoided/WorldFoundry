@@ -11,14 +11,12 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
-import net.minecraft.world.level.levelgen.VerticalAnchor
-import net.minecraft.world.level.levelgen.heightproviders.TrapezoidHeight
 import net.minecraft.world.level.levelgen.placement.BiomeFilter
-import net.minecraft.world.level.levelgen.placement.HeightRangePlacement
 import net.minecraft.world.level.levelgen.placement.HeightmapPlacement
-import net.minecraft.world.level.levelgen.placement.PlacementModifier
+import net.minecraft.world.level.levelgen.placement.PlacedFeature
+import net.minecraft.world.level.levelgen.placement.PlacementFilter
 import org.teamvoided.world_foundry.WorldFoundry.log
-import org.teamvoided.world_foundry.worldgen.CountOnFixedLayersPlacement
+import org.teamvoided.world_foundry.worldgen.UnderPlacementFixer
 
 
 fun isDev() = FabricLoader.getInstance().isDevelopmentEnvironment
@@ -32,11 +30,9 @@ fun <T : Any, R : Registry<T>> ResourceKey<R>.key(id: Identifier): ResourceKey<T
 
 
 fun evilFunction(frozen: RegistryAccess.Frozen) {
-//    return
 //    val sw = Stopwatch.createStarted()
 
     val feat = frozen.lookupOrThrow(Registries.PLACED_FEATURE)
-    val ops = frozen.createSerializationContext(JsonOps.INSTANCE)
     log.info("Processing features: {}", feat.size())
 
     val keys = feat.entrySet()
@@ -45,50 +41,29 @@ fun evilFunction(frozen: RegistryAccess.Frozen) {
         .sorted(Comparator.comparingInt { feat.getId(feat.getValueOrThrow(it)) })
 
     for (key in keys) {
-        val feature = feat.getValueOrThrow(key)
-
-        val otherList = feature.placement.toMutableList()
-        var mod = false
-        val shouldRemove = mutableListOf<PlacementModifier>()
-
-        for (modifier in feature.placement) {
-            if (modifier is HeightmapPlacement) {
-                shouldRemove.add(modifier)
-                mod = true
-            }
-        }
-
-        if (mod) {
-            otherList.addAll(getHeightPlaceMod(shouldRemove))
-            if (feature.placement.contains(BiomeFilter.biome())) {
-                otherList.remove(BiomeFilter.biome())
-                otherList.add(BiomeFilter.biome())
-            }
-            feature.placement = otherList.toList()
-            log.info("Modified: {}", key)
-        }
-
+        processFeatures(feat, key)
     }
 }
 
-val CUSTOM_RANGE =
-    HeightRangePlacement.of(TrapezoidHeight.of(VerticalAnchor.absolute(54), VerticalAnchor.absolute(90), 75))
+fun processFeatures(feat: Registry<PlacedFeature>, key: ResourceKey<PlacedFeature>) {
+    val feature = feat.getValueOrThrow(key)
 
-fun getHeightPlaceMod(shouldRemove: MutableList<PlacementModifier>): List<PlacementModifier> {
+    val outputList = feature.placement.toMutableList()
+    var mod = false
 
-    val heightmap = (shouldRemove[0] as? HeightmapPlacement)?.heightmap ?: return emptyList()
+    val filters = mutableListOf<PlacementFilter>()
+    for ((idx, modifier) in feature.placement.withIndex()) {
+        if (modifier is PlacementFilter && modifier !is BiomeFilter) {
+            filters.add(modifier)
+        }
+        if (modifier is HeightmapPlacement) {
+            outputList.add(idx + 1, UnderPlacementFixer.of(1, filters))
+            mod = true
+        }
+    }
 
-    return listOf(
-        /*  EnvironmentScanPlacement.scanningFor(
-              Direction.DOWN,
-              BlockPredicate.solid(),
-              BlockPredicate.ONLY_IN_AIR_PREDICATE,
-              12
-          ),*/
-//        CountPlacement.of(20),
-        CountOnFixedLayersPlacement.of(1, heightmap)
-//        CountOnEveryLayerPlacement.of(1)
-//        RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT
-    )
-//    return CountOnEveryLayerPlacement.of(1)
+    if (mod) {
+        feature.placement = outputList.toList()
+        log.info("Modified: {}", key)
+    }
 }

@@ -6,8 +6,6 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.tags.WorldPresetTags
-import net.minecraft.world.level.biome.Biomes
-import net.minecraft.world.level.biome.FixedBiomeSource
 import net.minecraft.world.level.biome.MultiNoiseBiomeSource
 import net.minecraft.world.level.biome.MultiNoiseBiomeSourceParameterLists
 import net.minecraft.world.level.biome.TheEndBiomeSource
@@ -82,7 +80,11 @@ class WorldPresetTagsProvider(o: FabricDataOutput, p: CompletableFuture<HolderLo
                                 LevelStem(
                                     dim.getOrThrow(BuiltinDimensionTypes.OVERWORLD_CAVES),
                                     NoiseBasedChunkGenerator(
-                                        FixedBiomeSource(biome.getOrThrow(Biomes.PALE_GARDEN)),
+                                        MultiNoiseBiomeSource.createFromPreset(
+                                            mnbpsl.getOrThrow(
+                                                MultiNoiseBiomeSourceParameterLists.OVERWORLD
+                                            )
+                                        ),
                                         cgs.getOrThrow(WFNoiseSettings.CAVE_WORLD)
                                     )
                                 ),
