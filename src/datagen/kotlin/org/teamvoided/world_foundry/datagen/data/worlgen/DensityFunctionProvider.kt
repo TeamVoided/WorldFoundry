@@ -107,18 +107,15 @@ object DensityFunctionProvider {
         c.register(
             WFDensityFunctions.FINAL_DENSITY_MIX,
             min(
-                NoiseRouterData.postProcess(
-                    transitionAmplified(
-                        densityFuns,
-                        NoiseRouterData.slideOverworld(
-                            false,
-                            cavesMainFunction
+                min(
+                    NoiseRouterData.postProcess(
+                        transitionAmplified(
+                            densityFuns,
+                            NoiseRouterData.slideOverworld(false, cavesMainFunction),
+                            NoiseRouterData.slideOverworld(true, cavesMainFunction)
                         ),
-                        NoiseRouterData.slideOverworld(
-                            true,
-                            cavesMainFunction
-                        )
-                    )
+                    ),
+                    densityFuns.denseHold(WFDensityFunctions.LAVA_CAVE)
                 ), densityFuns.denseHold(NoiseRouterData.NOODLE)
             )
         )
@@ -174,15 +171,17 @@ object DensityFunctionProvider {
             add(
                 mul(
                     constant(10.0),
-                    noise(noiseParams.getOrThrow(Noises.RIDGE)).abs()
+                    noise(noiseParams.getOrThrow(Noises.RIDGE), 0.25, 0.0).abs()
                 ),
                 spline(
-                    CubicSpline.builder(Spline.Coordinate(Holder.direct(yClampedGradient(-56, 0, -1.0, 1.0))))
-                        .addPoint(-1f, 0f, 0f)
-                        .addPoint(-0.75f, 0.8f, 0f)
-                        .addPoint(-0.2f, 9f, 0.3f)
-                        .addPoint(0.4f, 1.2f, 0f)
-                        .addPoint(1f, 0f, 0f)
+                    CubicSpline.builder(Spline.Coordinate(Holder.direct(yClampedGradient(-60, -40, -1.0, 1.0))))
+                        .addPoint(-1f, 0f, 0f )
+                        .addPoint(-0.85f, -0.02f, -0.1f)
+                        .addPoint(-0.6f, -0.05f, -0.35f)
+                        .addPoint(-0.5f, -0.08f, -0.25f)
+                        .addPoint(-0.4f, -0.15f, -0.75f)
+                        .addPoint(-0.1f, -0.08f, 0f)
+                        .addPoint(0.0f, 0f, 0.4f)
                         .build()
                 )
             ).squeeze()
