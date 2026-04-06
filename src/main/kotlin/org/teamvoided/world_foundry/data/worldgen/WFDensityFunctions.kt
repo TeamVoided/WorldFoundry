@@ -25,6 +25,8 @@ object WFDensityFunctions {
     val I_D_W_J_AMPLIFIED = create("initial_density_without_jaggedness_amplified")
     val FINAL_DENSITY_MIX = create("final_density_mix")
 
+    val LAVA_CAVE = create("lava_cave")
+
     fun create(id: String) = Registries.DENSITY_FUNCTION.key(id(id))
 
 }

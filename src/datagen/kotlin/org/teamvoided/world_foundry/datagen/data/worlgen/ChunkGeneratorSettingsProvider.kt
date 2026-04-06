@@ -1,14 +1,15 @@
 package org.teamvoided.world_foundry.datagen.data.worlgen
 
+import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.data.worldgen.SurfaceRuleData
 import net.minecraft.world.level.biome.OverworldBiomeBuilder
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
-import net.minecraft.world.level.levelgen.NoiseRouterData
-import net.minecraft.world.level.levelgen.NoiseSettings
+import net.minecraft.world.level.levelgen.*
+import org.teamvoided.world_foundry.data.worldgen.WFDensityFunctions
 import org.teamvoided.world_foundry.data.worldgen.WFNoiseSettings
+import org.teamvoided.world_foundry.datagen.data.worlgen.DensityFunctionProvider.denseHold
 
 object ChunkGeneratorSettingsProvider {
     fun bootstrap(c: BootstrapContext<NoiseGeneratorSettings>) {
@@ -32,6 +33,43 @@ object ChunkGeneratorSettingsProvider {
                 true, // oreVeinsEnabled
                 false // useLegacyRandomSource
             )
+        )
+
+        c.register(
+            WFNoiseSettings.NOISE,
+            NoiseGeneratorSettings(
+                NoiseSettings.OVERWORLD_NOISE_SETTINGS,
+                Blocks.STONE.defaultBlockState(),
+                Blocks.WATER.defaultBlockState(),
+                router(c.lookup(Registries.DENSITY_FUNCTION)),
+                SurfaceRuleData.overworld(),
+                OverworldBiomeBuilder().spawnTarget(),
+                63,
+                true, // disableMobGeneration
+                true, // aquifersEnabled
+                false, // oreVeinsEnabled
+                false // useLegacyRandomSource
+            )
+        )
+    }
+
+    fun router(holder: HolderGetter<DensityFunction>): NoiseRouter {
+        return NoiseRouter(
+            DensityFunctions.zero(),
+            DensityFunctions.zero(),
+            DensityFunctions.zero(),
+            DensityFunctions.zero(),
+            DensityFunctions.zero(),
+            DensityFunctions.zero(),
+            DensityFunctions.zero(),
+            DensityFunctions.zero(),
+            DensityFunctions.zero(),
+            DensityFunctions.zero(),
+            DensityFunctions.zero(),
+            holder.denseHold(WFDensityFunctions.LAVA_CAVE),
+            DensityFunctions.zero(),
+            DensityFunctions.zero(),
+            DensityFunctions.zero()
         )
     }
 
