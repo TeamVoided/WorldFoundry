@@ -26,12 +26,12 @@ object DensityFunctionProvider {
         val shiftZ = densityFuns.denseHold(NoiseRouterData.SHIFT_Z)
         c.register(
             WFDensityFunctions.AMPLIFIED_REGION,
-            DensityFunctions.cache2d(
-                DensityFunctions.mul(
-                    DensityFunctions.constant(3.0),
+            cache2d(
+                mul(
+                    constant(3.0),
                     ShiftierNoise(
-                        DensityFunctions.mul(
-                            DensityFunctions.constant(0.25),
+                        mul(
+                            constant(0.25),
                             ConfigureDensityFunction(WFConfig.AMPLIFIED_SIZE)
                         ),
                         noiseParams.getOrThrow(WFNoises.AMPLIFIED_TRANSITION_NOISE)
@@ -41,11 +41,11 @@ object DensityFunctionProvider {
         )
         c.register(
             WFDensityFunctions.NORMAL_REGION,
-            DensityFunctions.cache2d(
-                DensityFunctions.mul(
-                    DensityFunctions.constant(-1.0),
-                    DensityFunctions.add(
-                        DensityFunctions.constant(-1.0),
+            cache2d(
+                mul(
+                    constant(-1.0),
+                    add(
+                        constant(-1.0),
                         densityFuns.denseHold(WFDensityFunctions.AMPLIFIED_REGION)
                     )
                 )
@@ -56,7 +56,7 @@ object DensityFunctionProvider {
             WFDensityFunctions.TEMPERATURE_WF, ShiftierNoise(
                 shiftX,
                 shiftZ,
-                DensityFunctions.mul(DensityFunctions.constant(0.25), ConfigureDensityFunction(WFConfig.TEMPERATURE)),
+                mul(constant(0.25), ConfigureDensityFunction(WFConfig.TEMPERATURE)),
                 noiseParams.getOrThrow(Noises.TEMPERATURE)
             )
         )
@@ -64,7 +64,7 @@ object DensityFunctionProvider {
             WFDensityFunctions.VEGETATION_WF, ShiftierNoise(
                 shiftX,
                 shiftZ,
-                DensityFunctions.mul(DensityFunctions.constant(0.25), ConfigureDensityFunction(WFConfig.HUMIDITY)),
+                mul(constant(0.25), ConfigureDensityFunction(WFConfig.HUMIDITY)),
                 noiseParams.getOrThrow(Noises.VEGETATION)
             )
         )
@@ -72,8 +72,8 @@ object DensityFunctionProvider {
             WFDensityFunctions.CONTINENTS_WF, ShiftierNoise(
                 shiftX,
                 shiftZ,
-                DensityFunctions.mul(
-                    DensityFunctions.constant(0.25),
+                mul(
+                    constant(0.25),
                     ConfigureDensityFunction(WFConfig.CONTINENTALNESS)
                 ),
                 noiseParams.getOrThrow(Noises.CONTINENTALNESS)
@@ -83,21 +83,21 @@ object DensityFunctionProvider {
             WFDensityFunctions.EROSION_WF, ShiftierNoise(
                 shiftX,
                 shiftZ,
-                DensityFunctions.mul(DensityFunctions.constant(0.25), ConfigureDensityFunction(WFConfig.EROSION)),
+                mul(constant(0.25), ConfigureDensityFunction(WFConfig.EROSION)),
                 noiseParams.getOrThrow(Noises.EROSION)
             )
         )
 
 
         val slopedCheeseFunction = densityFuns.denseHold(WFDensityFunctions.SLOPED_CHEESE_MIX)
-        val caveEntrancesFunction = DensityFunctions.min(
+        val caveEntrancesFunction = min(
             slopedCheeseFunction,
-            DensityFunctions.mul(
-                DensityFunctions.constant(5.0),
+            mul(
+                constant(5.0),
                 densityFuns.denseHold(NoiseRouterData.ENTRANCES)
             )
         )
-        val cavesMainFunction = DensityFunctions.rangeChoice(
+        val cavesMainFunction = rangeChoice(
             slopedCheeseFunction,
             -1000000.0,
             1.5625,
@@ -106,7 +106,7 @@ object DensityFunctionProvider {
         )
         c.register(
             WFDensityFunctions.FINAL_DENSITY_MIX,
-            DensityFunctions.min(
+            min(
                 NoiseRouterData.postProcess(
                     transitionAmplified(
                         densityFuns,
@@ -134,12 +134,12 @@ object DensityFunctionProvider {
             )
         )
 
-        val idwjFlesh = DensityFunctions.add(
+        val idwjFlesh = add(
             NoiseRouterData.noiseGradientDensity(
-                DensityFunctions.cache2d(densityFuns.denseHold(WFDensityFunctions.FACTOR_MIX)),
+                cache2d(densityFuns.denseHold(WFDensityFunctions.FACTOR_MIX)),
                 densityFuns.denseHold(WFDensityFunctions.DEPTH_MIX)
             ),
-            DensityFunctions.constant(-0.703125)
+            constant(-0.703125)
         ).clamp(-64.0, 64.0)
         c.register(
             WFDensityFunctions.I_D_W_J_NORMAL,
@@ -159,7 +159,7 @@ object DensityFunctionProvider {
         createGenerationSplinesAmplifiedMixture(
             c,
             densityFuns,
-            DensityFunctions.noise(noiseParams.getOrThrow(Noises.JAGGED), 1500.0, 0.0),
+            noise(noiseParams.getOrThrow(Noises.JAGGED), 1500.0, 0.0),
             densityFuns.getOrThrow(WFDensityFunctions.CONTINENTS_WF),
             densityFuns.getOrThrow(WFDensityFunctions.EROSION_WF),
             WFDensityFunctions.OFFSET_MIX,
@@ -202,21 +202,21 @@ object DensityFunctionProvider {
         depth: ResourceKey<DensityFunction>,
         cheese: ResourceKey<DensityFunction>,
     ) {
-        val continentsNoise = DensityFunctions.Spline.Coordinate(continents)
-        val erosionNoise = DensityFunctions.Spline.Coordinate(erosion)
+        val continentsNoise = Spline.Coordinate(continents)
+        val erosionNoise = Spline.Coordinate(erosion)
         val ridgesNoise =
-            DensityFunctions.Spline.Coordinate(densityFuns.getOrThrow(NoiseRouterData.RIDGES))
+            Spline.Coordinate(densityFuns.getOrThrow(NoiseRouterData.RIDGES))
         val ridgesFoldedNoise =
-            DensityFunctions.Spline.Coordinate(densityFuns.getOrThrow(NoiseRouterData.RIDGES_FOLDED))
+            Spline.Coordinate(densityFuns.getOrThrow(NoiseRouterData.RIDGES_FOLDED))
         val offsetSpline = NoiseRouterData.registerAndWrap(
             c,
             offset,
             NoiseRouterData.splineWithBlending(
-                DensityFunctions.add(
-                    DensityFunctions.constant(-0.50375),
+                add(
+                    constant(-0.50375),
                     transitionAmplified(
                         densityFuns,
-                        DensityFunctions.spline(
+                        spline(
                             TerrainProvider.overworldOffset(
                                 continentsNoise,
                                 erosionNoise,
@@ -224,7 +224,7 @@ object DensityFunctionProvider {
                                 false
                             )
                         ),
-                        DensityFunctions.spline(
+                        spline(
                             TerrainProvider.overworldOffset(
                                 continentsNoise,
                                 erosionNoise,
@@ -233,7 +233,7 @@ object DensityFunctionProvider {
                             )
                         )
                     )
-                ), DensityFunctions.blendOffset()
+                ), blendOffset()
             )
         )
         val factorSpline = NoiseRouterData.registerAndWrap(
@@ -242,7 +242,7 @@ object DensityFunctionProvider {
             NoiseRouterData.splineWithBlending(
                 transitionAmplified(
                     densityFuns,
-                    DensityFunctions.spline(
+                    spline(
                         TerrainProvider.overworldFactor(
                             continentsNoise,
                             erosionNoise,
@@ -251,7 +251,7 @@ object DensityFunctionProvider {
                             false
                         )
                     ),
-                    DensityFunctions.spline(
+                    spline(
                         TerrainProvider.overworldFactor(
                             continentsNoise,
                             erosionNoise,
@@ -266,7 +266,7 @@ object DensityFunctionProvider {
         val depthFunction = NoiseRouterData.registerAndWrap(
             c,
             depth,
-            DensityFunctions.add(DensityFunctions.yClampedGradient(-64, 320, 1.5, -1.5), offsetSpline)
+            add(yClampedGradient(-64, 320, 1.5, -1.5), offsetSpline)
         )
         val jaggednessSpline = NoiseRouterData.registerAndWrap(
             c,
@@ -274,7 +274,7 @@ object DensityFunctionProvider {
             NoiseRouterData.splineWithBlending(
                 transitionAmplified(
                     densityFuns,
-                    DensityFunctions.spline(
+                    spline(
                         TerrainProvider.overworldJaggedness(
                             continentsNoise,
                             erosionNoise,
@@ -283,7 +283,7 @@ object DensityFunctionProvider {
                             false
                         )
                     ),
-                    DensityFunctions.spline(
+                    spline(
                         TerrainProvider.overworldJaggedness(
                             continentsNoise,
                             erosionNoise,
@@ -295,14 +295,14 @@ object DensityFunctionProvider {
                 ), NoiseRouterData.BLENDING_JAGGEDNESS
             )
         )
-        val jagged = DensityFunctions.mul(jaggednessSpline, jaggedNoise.halfNegative())
+        val jagged = mul(jaggednessSpline, jaggedNoise.halfNegative())
         val depthAndJaggedness = NoiseRouterData.noiseGradientDensity(
             factorSpline,
-            DensityFunctions.add(depthFunction, jagged)
+            add(depthFunction, jagged)
         )
         c.register(
             cheese,
-            DensityFunctions.add(
+            add(
                 depthAndJaggedness,
                 densityFuns.denseHold(NoiseRouterData.BASE_3D_NOISE_OVERWORLD)
             )
@@ -314,16 +314,16 @@ object DensityFunctionProvider {
         noiseParams: HolderGetter<NormalNoise.NoiseParameters>,
     ): NoiseRouter {
         val aquiferBarrierFunction =
-            DensityFunctions.noise(noiseParams.getOrThrow(Noises.AQUIFER_BARRIER), 0.5)
-        val aquiferFluidLevelFloodedness = DensityFunctions.noise(
+            noise(noiseParams.getOrThrow(Noises.AQUIFER_BARRIER), 0.5)
+        val aquiferFluidLevelFloodedness = noise(
             noiseParams.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_FLOODEDNESS),
             0.67
         )
-        val aquiferFluidLevelSpread = DensityFunctions.noise(
+        val aquiferFluidLevelSpread = noise(
             noiseParams.getOrThrow(Noises.AQUIFER_FLUID_LEVEL_SPREAD),
             0.7142857142857143
         )
-        val aquiferLava = DensityFunctions.noise(noiseParams.getOrThrow(Noises.AQUIFER_LAVA))
+        val aquiferLava = noise(noiseParams.getOrThrow(Noises.AQUIFER_LAVA))
         val yLevel = densityFuns.denseHold(NoiseRouterData.Y)
         val veinTypeMinY = Stream.of(*OreVeinifier.VeinType.entries.toTypedArray())
             .mapToInt { type: OreVeinifier.VeinType -> type.minY }
@@ -333,7 +333,7 @@ object DensityFunctionProvider {
             .max().orElse(-DimensionType.MIN_Y * 2)
         val oreVeininessFunction = NoiseRouterData.yLimitedInterpolatable(
             yLevel,
-            DensityFunctions.noise(noiseParams.getOrThrow(Noises.ORE_VEININESS), 1.5, 1.5),
+            noise(noiseParams.getOrThrow(Noises.ORE_VEININESS), 1.5, 1.5),
             veinTypeMinY,
             veinTypeMaxY,
             0
@@ -341,23 +341,23 @@ object DensityFunctionProvider {
         val veinScale = 4.0
         val veinFunctionA = NoiseRouterData.yLimitedInterpolatable(
             yLevel,
-            DensityFunctions.noise(noiseParams.getOrThrow(Noises.ORE_VEIN_A), veinScale, veinScale),
+            noise(noiseParams.getOrThrow(Noises.ORE_VEIN_A), veinScale, veinScale),
             veinTypeMinY,
             veinTypeMaxY,
             0
         ).abs()
         val veinFunctionB = NoiseRouterData.yLimitedInterpolatable(
             yLevel,
-            DensityFunctions.noise(noiseParams.getOrThrow(Noises.ORE_VEIN_B), veinScale, veinScale),
+            noise(noiseParams.getOrThrow(Noises.ORE_VEIN_B), veinScale, veinScale),
             veinTypeMinY,
             veinTypeMaxY,
             0
         ).abs()
-        val veinFunction = DensityFunctions.add(
-            DensityFunctions.constant(-0.07999999821186066),
-            DensityFunctions.max(veinFunctionA, veinFunctionB)
+        val veinFunction = add(
+            constant(-0.07999999821186066),
+            max(veinFunctionA, veinFunctionB)
         )
-        val veinGapFunction = DensityFunctions.noise(noiseParams.getOrThrow(Noises.ORE_GAP))
+        val veinGapFunction = noise(noiseParams.getOrThrow(Noises.ORE_GAP))
         return NoiseRouter(
             aquiferBarrierFunction,
             aquiferFluidLevelFloodedness,
@@ -403,10 +403,10 @@ object DensityFunctionProvider {
         addToAll: Double,
     ): DensityFunction {
         val densityFunction =
-            DensityFunctions.yClampedGradient(yMin + yHeight - upperYRoof, yMin + yHeight - lowerYRoof, 1.0, 0.0)
-        val densityFunction2 = DensityFunctions.lerp(densityFunction, clampOffset, function1)
-        val densityFunction3 = DensityFunctions.yClampedGradient(yMin + lowerYFloor, yMin + upperYfloor, 0.0, 1.0)
-        return DensityFunctions.lerp(densityFunction3, addToAll, densityFunction2)
+            yClampedGradient(yMin + yHeight - upperYRoof, yMin + yHeight - lowerYRoof, 1.0, 0.0)
+        val densityFunction2 = lerp(densityFunction, clampOffset, function1)
+        val densityFunction3 = yClampedGradient(yMin + lowerYFloor, yMin + upperYfloor, 0.0, 1.0)
+        return lerp(densityFunction3, addToAll, densityFunction2)
     }
 
 
@@ -415,12 +415,12 @@ object DensityFunctionProvider {
         normal: DensityFunction,
         amplified: DensityFunction,
     ): DensityFunction {
-        return DensityFunctions.add(
-            DensityFunctions.mul(
+        return add(
+            mul(
                 normal,
                 densityFuns.denseHold(WFDensityFunctions.NORMAL_REGION)
             ),
-            DensityFunctions.mul(
+            mul(
                 amplified,
                 densityFuns.denseHold(WFDensityFunctions.AMPLIFIED_REGION)
             )
@@ -431,6 +431,6 @@ object DensityFunctionProvider {
     fun HolderGetter<DensityFunction>.denseHold(
         key: ResourceKey<DensityFunction>,
     ): DensityFunction {
-        return DensityFunctions.HolderHolder(getOrThrow(key))
+        return HolderHolder(getOrThrow(key))
     }
 }
