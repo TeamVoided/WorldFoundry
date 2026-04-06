@@ -7,6 +7,7 @@ import org.teamvoided.world_foundry.key
 object WFNoises {
 
     val AMPLIFIED_TRANSITION_NOISE = create("amplified_transition")
+    val LAVA_RIVER = create("lava_river")
 
     fun create(id: String) = Registries.NOISE.key(id(id))
 

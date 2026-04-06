@@ -171,7 +171,7 @@ object DensityFunctionProvider {
             add(
                 mul(
                     constant(10.0),
-                    noise(noiseParams.getOrThrow(Noises.RIDGE), 0.25, 0.0).abs()
+                    noise(noiseParams.getOrThrow(WFNoises.LAVA_RIVER), 0.25, 0.0).abs()
                 ),
                 spline(
                     CubicSpline.builder(Spline.Coordinate(Holder.direct(yClampedGradient(-60, -40, -1.0, 1.0))))
