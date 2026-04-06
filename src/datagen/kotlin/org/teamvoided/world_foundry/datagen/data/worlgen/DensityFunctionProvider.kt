@@ -391,6 +391,7 @@ object DensityFunctionProvider {
         )
     }
 
+    @Suppress("SameParameterValue")
     private fun createIDWJ(
         function1: DensityFunction,
         yMin: Int,
