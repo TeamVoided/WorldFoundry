@@ -12,6 +12,9 @@ import net.minecraft.core.registries.Registries
 import org.teamvoided.world_foundry.WorldFoundry
 import org.teamvoided.world_foundry.WorldFoundry.log
 import org.teamvoided.world_foundry.datagen.assets.EnLangProvider
+import org.teamvoided.world_foundry.datagen.data.tags.BiomeTagsProvider
+import org.teamvoided.world_foundry.datagen.data.tags.BlockTagsProvider
+import org.teamvoided.world_foundry.datagen.data.tags.PlacedFeatureTagsProvider
 import org.teamvoided.world_foundry.datagen.data.tags.WorldPresetTagsProvider
 import org.teamvoided.world_foundry.datagen.data.worlgen.ChunkGeneratorSettingsProvider
 import org.teamvoided.world_foundry.datagen.data.worlgen.DensityFunctionProvider
@@ -29,6 +32,9 @@ class WorldFoundryData : DataGeneratorEntrypoint {
         // Assets
         pack.addProvider(::EnLangProvider)
         // Data
+        pack.addProvider(::BiomeTagsProvider)
+        pack.addProvider(::BlockTagsProvider)
+        pack.addProvider(::PlacedFeatureTagsProvider)
         pack.addProvider(::WorldPresetTagsProvider)
         pack.addProvider(::WorldgenProvider)
     }
