@@ -1,5 +1,5 @@
 
-package org.teamvoided.world_foundry.mixin.datagen;
+package org.teamvoided.world_foundry.mixin;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.server.MinecraftServer;
@@ -17,6 +17,6 @@ public abstract class MinecraftServerMixin {
 
 	@Inject(method = "<init>", at = @At(value = "RETURN"))
 	private void finalizeWorldGen(CallbackInfo ci) {
-		HelpersKt.evilFunction(registryAccess());
+		HelpersKt.featureModifier(registryAccess());
 	}
 }

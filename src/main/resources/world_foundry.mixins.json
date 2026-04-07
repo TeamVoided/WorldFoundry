@@ -4,7 +4,8 @@
   "package": "org.teamvoided.world_foundry.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "datagen.MinecraftServerMixin"
+    "DarkOakTrunkPlacerMixin",
+    "MinecraftServerMixin"
   ],
   "client": [],
   "injectors": {
