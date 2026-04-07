@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.placement.AquaticPlacements
+import net.minecraft.data.worldgen.placement.MiscOverworldPlacements
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import org.teamvoided.world_foundry.data.tags.WFPlacesFeatureTags
 import java.util.concurrent.CompletableFuture
@@ -26,6 +27,7 @@ class PlacedFeatureTagsProvider(o: FabricDataOutput, p: CompletableFuture<Holder
             .add(AquaticPlacements.KELP_COLD)
             .add(AquaticPlacements.KELP_WARM)
             .add(AquaticPlacements.WARM_OCEAN_VEGETATION)
+            .add(MiscOverworldPlacements.LAKE_LAVA_SURFACE)
 
     }
 }
