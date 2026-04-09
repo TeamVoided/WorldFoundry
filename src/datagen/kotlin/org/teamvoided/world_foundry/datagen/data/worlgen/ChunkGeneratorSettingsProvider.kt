@@ -9,14 +9,11 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.*
 import org.teamvoided.world_foundry.data.worldgen.WFDensityFunctions
 import org.teamvoided.world_foundry.data.worldgen.WFNoiseSettings
-import org.teamvoided.world_foundry.datagen.data.worlgen.DensityFunctionProvider.denseHold
+import org.teamvoided.world_foundry.datagen.data.worlgen.DensityFunctionProvider.holder
 
 object ChunkGeneratorSettingsProvider {
     fun bootstrap(c: BootstrapContext<NoiseGeneratorSettings>) {
-        c.register(
-            WFNoiseSettings.AMPLIFIED_MIXTURE,
-            createOverworldMixSettings(c)
-        )
+        c.register(WFNoiseSettings.AMPLIFIED_MIXTURE, c.createOverworldMixSettings())
 
         c.register(
             WFNoiseSettings.CAVE_WORLD,
@@ -66,23 +63,21 @@ object ChunkGeneratorSettingsProvider {
             DensityFunctions.zero(),
             DensityFunctions.zero(),
             DensityFunctions.zero(),
-            holder.denseHold(WFDensityFunctions.LAVA_CAVE),
+            holder.holder(WFDensityFunctions.LAVA_CAVE),
             DensityFunctions.zero(),
             DensityFunctions.zero(),
             DensityFunctions.zero()
         )
     }
 
-    private fun createOverworldMixSettings(
-        c: BootstrapContext<*>,
-    ): NoiseGeneratorSettings {
+    private fun BootstrapContext<NoiseGeneratorSettings>.createOverworldMixSettings(): NoiseGeneratorSettings {
         return NoiseGeneratorSettings(
             NoiseSettings.OVERWORLD_NOISE_SETTINGS,
             Blocks.STONE.defaultBlockState(),
             Blocks.WATER.defaultBlockState(),
-            DensityFunctionProvider.OverworldNoiseSettingsMakerAmplifiedMixture(
-                c.lookup(Registries.DENSITY_FUNCTION),
-                c.lookup(Registries.NOISE)
+            DensityFunctionProvider.overworldNoiseSettingsMakerAmplifiedMixture(
+                lookup(Registries.DENSITY_FUNCTION),
+                lookup(Registries.NOISE)
             ),
             SurfaceRuleData.overworld(),
             OverworldBiomeBuilder().spawnTarget(),
