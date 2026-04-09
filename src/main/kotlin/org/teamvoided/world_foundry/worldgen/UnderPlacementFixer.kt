@@ -7,73 +7,93 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.tags.BlockTags
+import net.minecraft.core.Vec3i
 import net.minecraft.util.RandomSource
-import net.minecraft.util.valueproviders.ConstantInt
-import net.minecraft.util.valueproviders.IntProvider
-import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.levelgen.VerticalAnchor
-import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate.*
 import net.minecraft.world.level.levelgen.heightproviders.UniformHeight
 import net.minecraft.world.level.levelgen.placement.*
+import net.minecraft.world.level.levelgen.placement.EnvironmentScanPlacement.scanningFor
+import org.teamvoided.world_foundry.WorldFoundry.CONFIG
+import org.teamvoided.world_foundry.data.tags.WFBlockTags.WORLDGEN_REPLACEABLE
 import org.teamvoided.world_foundry.init.WFPlacementModifierTypes
+import org.teamvoided.world_foundry.packLong
 import java.util.stream.Stream
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
-class UnderPlacementFixer(val count: IntProvider, val filters: List<PlacementFilter>) : PlacementModifier() {
+class UnderPlacementFixer(val filters: List<PlacementFilter>) : PlacementModifier() {
 
     override fun type(): PlacementModifierType<*> = WFPlacementModifierTypes.UNDER_PLACEMENT_FIXER
 
     override fun getPositions(context: PlacementContext, random: RandomSource, pos: BlockPos): Stream<BlockPos> {
-        val set = mutableSetOf<BlockPos>()
-        set.add(pos)
+        val positions = mutableSetOf<BlockPos>()
+        positions.add(pos)
 
-        val top = pos.y - 5
+        val top = pos.y - CONFIG.underPlacementFixer.startingDepth.get()
         if (top <= context.minY) {
-            return set.stream()
-        }
-        val bottom = min(context.level.seaLevel - 32, max(top - 32, context.minY))
-
-        val height =
-            UniformHeight.of(VerticalAnchor.absolute(bottom), VerticalAnchor.absolute(top))
-
-        val steps = (abs(bottom - top) / 1.1).toInt()
-
-        val envScan = EnvironmentScanPlacement.scanningFor(
-            Direction.DOWN,
-            BlockPredicate.noFluid(),
-            BlockPredicate.matchesTag(BlockTags.REPLACEABLE),
-            32
-        )
-
-        val list = listOf(
-            CountPlacement.of(steps),
-            InSquarePlacement.spread(),
-            HeightRangePlacement.of(height),
-            envScan
-        )
-
-        val pos2 = ChunkPos(pos).worldPosition
-
-        var extraStream = Stream.of(pos2)
-        for (mod in list + filters) {
-            extraStream = extraStream.flatMap { mod.getPositions(context, random, it) }
+            return positions.stream()
         }
 
-        set.addAll(extraStream.toList())
+        val bottom = max(
+            min(context.level.seaLevel, top) - CONFIG.underPlacementFixer.bottomLayerOffset.get(),
+            context.minY
+        )
+        val steps = abs(bottom - top) / CONFIG.underPlacementFixer.stepDivider.get()
 
-        return set.stream()
+        val modifiers = getModifierList(steps, bottom, top)
+
+        var additionalPos = Stream.of(pos)
+        for (mod in modifiers) {
+            additionalPos = additionalPos.flatMap { mod.getPositions(context, random, it) }
+        }
+
+        positions.addAll(additionalPos.toList())
+
+        return positions.stream()
     }
 
-
     companion object {
+
+        var COUNT_CACHE = mutableMapOf<Int, CountPlacement>()
+        var HEIGHT_CACHE = mutableMapOf<Long, HeightRangePlacement>()
+        val ENV_SCAN = scanningFor(
+            Direction.DOWN,
+            allOf(noFluid(), not(matchesTag(Vec3i(0, -1, 0), WORLDGEN_REPLACEABLE))),
+            matchesTag(WORLDGEN_REPLACEABLE),
+            CONFIG.underPlacementFixer.envScanSteps.get()
+        )
+
+        fun UnderPlacementFixer.getModifierList(steps: Int, bottom: Int, top: Int): List<PlacementModifier> {
+            var count = COUNT_CACHE[steps]
+            if (count == null) {
+                val place = CountPlacement.of(steps)
+                COUNT_CACHE[steps] = place
+                count = place
+            }
+
+            val heightIdx = packLong(bottom, top)
+            var heightPlacement = HEIGHT_CACHE[heightIdx]
+            if (heightPlacement == null) {
+                val place = HeightRangePlacement.of(
+                    UniformHeight.of(VerticalAnchor.absolute(bottom), VerticalAnchor.absolute(top))
+                )
+                HEIGHT_CACHE[heightIdx] = place
+                heightPlacement = place
+            }
+
+            return listOf(
+                count,
+//                OffsetSquarePlacement.spread(),
+                heightPlacement,
+                ENV_SCAN
+            ) + filters
+        }
 
         val CODEC: MapCodec<UnderPlacementFixer> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    IntProvider.codec(0, 256).fieldOf("count").forGetter { it.count },
                     PlacementModifier.CODEC
                         .flatXmap({
                             if (it is PlacementFilter) success(it)
@@ -84,12 +104,7 @@ class UnderPlacementFixer(val count: IntProvider, val filters: List<PlacementFil
                 .apply(instance, ::UnderPlacementFixer)
         }
 
-        fun of(provider: IntProvider, filters: List<PlacementFilter>): UnderPlacementFixer {
-            return UnderPlacementFixer(provider, filters)
-        }
+        fun of(filters: List<PlacementFilter>): UnderPlacementFixer = UnderPlacementFixer(filters)
 
-        fun of(i: Int, filters: List<PlacementFilter>): UnderPlacementFixer {
-            return of(ConstantInt.of(i), filters)
-        }
     }
 }

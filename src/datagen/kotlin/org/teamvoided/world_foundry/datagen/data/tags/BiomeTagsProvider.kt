@@ -15,5 +15,8 @@ class BiomeTagsProvider(o: FabricDataOutput, p: CompletableFuture<HolderLookup.P
     override fun addTags(arg: HolderLookup.Provider) {
         builder(WFBiomeTags.DENY_UNDER_PLACEMENT)
             .forceAddTag(ConventionalBiomeTags.IS_OCEAN)
+
+        builder(WFBiomeTags.ALLOW_UNDER_PLACEMENT)
+            .forceAddTag(ConventionalBiomeTags.IS_OVERWORLD)
     }
 }

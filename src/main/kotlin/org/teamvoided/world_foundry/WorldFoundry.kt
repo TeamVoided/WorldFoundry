@@ -11,6 +11,7 @@ import org.teamvoided.world_foundry.init.WFPlacementModifierTypes
 @Suppress("unused")
 object WorldFoundry {
     const val MODID = "world_foundry"
+    @JvmField
     val log: Logger = LoggerFactory.getLogger(WorldFoundry::class.simpleName)
 
     var CONFIG = ConfigApi.registerAndLoadConfig(::WFConfig)
