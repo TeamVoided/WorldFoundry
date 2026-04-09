@@ -107,16 +107,17 @@ object DensityFunctionProvider {
         c.register(
             WFDensityFunctions.FINAL_DENSITY_MIX,
             min(
-                min(
-                    NoiseRouterData.postProcess(
-                        transitionAmplified(
-                            densityFuns,
-                            NoiseRouterData.slideOverworld(false, cavesMainFunction),
-                            NoiseRouterData.slideOverworld(true, cavesMainFunction)
-                        ),
+//                min(
+                NoiseRouterData.postProcess(
+                    transitionAmplified(
+                        densityFuns,
+                        NoiseRouterData.slideOverworld(false, cavesMainFunction),
+                        NoiseRouterData.slideOverworld(true, cavesMainFunction)
                     ),
-                    densityFuns.denseHold(WFDensityFunctions.LAVA_CAVE)
-                ), densityFuns.denseHold(NoiseRouterData.NOODLE)
+                ),
+//                    densityFuns.denseHold(WFDensityFunctions.LAVA_CAVE)
+//                ),
+                densityFuns.denseHold(NoiseRouterData.NOODLE)
             )
         )
 
@@ -175,7 +176,7 @@ object DensityFunctionProvider {
                 ),
                 spline(
                     CubicSpline.builder(Spline.Coordinate(Holder.direct(yClampedGradient(-60, -40, -1.0, 1.0))))
-                        .addPoint(-1f, 0f, 0f )
+                        .addPoint(-1f, 0f, 0f)
                         .addPoint(-0.85f, -0.02f, -0.1f)
                         .addPoint(-0.6f, -0.05f, -0.35f)
                         .addPoint(-0.5f, -0.08f, -0.25f)
