@@ -67,8 +67,8 @@ object FeatureModifier {
         return features
     }
 
-    fun tryModifyFeature(feat: Registry<PlacedFeature>, key: ResourceKey<PlacedFeature>): Boolean {
-        val holder = feat.get(key).get()
+    fun tryModifyFeature(registry: Registry<PlacedFeature>, key: ResourceKey<PlacedFeature>): Boolean {
+        val holder = registry.get(key).get()
 
         if (!holder.`is`(ALLOW_UNDER_PLACEMENT) && holder.`is`(DENY_UNDER_PLACEMENT)) {
             return false
