@@ -4,8 +4,10 @@
   "package": "org.teamvoided.world_foundry.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "BiomeModificationImplMixin",
     "DarkOakTrunkPlacerMixin",
-    "BiomeModificationImplMixin"
+    "PlacedFeatureMixin",
+    "RepeatingPlacementAccessor"
   ],
   "client": [],
   "injectors": {

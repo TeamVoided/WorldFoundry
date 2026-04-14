@@ -6,13 +6,15 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifier
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType
 import org.teamvoided.world_foundry.WorldFoundry.id
 import org.teamvoided.world_foundry.register
-import org.teamvoided.world_foundry.worldgen.OffsetSquarePlacement
-import org.teamvoided.world_foundry.worldgen.UnderPlacementFixer
+import org.teamvoided.world_foundry.worldgen.placement.OffsetSquarePlacement
+import org.teamvoided.world_foundry.worldgen.placement.DynamicHeightRangePlacement
+import org.teamvoided.world_foundry.worldgen.placement.WrappedRepeatingPlacement
 
 object WFPlacementModifierTypes {
 
-    val UNDER_PLACEMENT_FIXER = register("under_placement_fixer", UnderPlacementFixer.CODEC)
     val OFFSET_SQUARE = register("offset_square", OffsetSquarePlacement.CODEC)
+    val WRAPPED_REPEATING = register("wrapped_repeating", WrappedRepeatingPlacement.CODEC)
+    val DYNAMIC_HEIGHT_RANGE = register("dynamic_height_range", DynamicHeightRangePlacement.CODEC)
 
     fun init() = Unit
 

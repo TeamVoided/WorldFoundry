@@ -1,4 +1,4 @@
-package org.teamvoided.world_foundry.worldgen
+package org.teamvoided.world_foundry.worldgen.placement
 
 import com.mojang.serialization.MapCodec
 import net.minecraft.core.BlockPos
