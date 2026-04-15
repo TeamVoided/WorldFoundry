@@ -28,7 +28,7 @@ import java.util.stream.Stream
 // TODO clean up
 object FeatureModifier {
 
-    val featuresToModify = mutableListOf<PlacedFeature>()
+    val featuresToModify = mutableSetOf<PlacedFeature>()
 
     @JvmStatic
     fun featureModificationStep(access: RegistryAccess) {
