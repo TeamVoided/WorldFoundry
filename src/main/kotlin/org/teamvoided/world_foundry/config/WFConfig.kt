@@ -80,8 +80,8 @@ class WFConfig : Config(id(MODID)) {
             ValidatedSet(setOf(Decoration.VEGETAL_DECORATION), ValidatedEnum(Decoration::class.java))
 
         @RequiresAction(Action.RESTART)
-        var envScanSteps = ValidatedInt(4, 64, 2)
-        var startingDepth = ValidatedInt(6, 32, 0)
+        var envScanSteps = ValidatedInt(16, 64, 2)
+        var startingDepth = ValidatedInt(8, 32, 0)
         var bottomLayerOffset = ValidatedInt(40, 128, 0)
 //        var stepDivider = ValidatedInt(8, 16, 0)
 
