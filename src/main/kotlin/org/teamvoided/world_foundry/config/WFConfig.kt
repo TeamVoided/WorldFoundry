@@ -57,9 +57,9 @@ class WFConfig : Config(id(MODID)) {
         @RequiresAction(Action.RESTART)
         var enabled = true
 
-        var countMultiplier = ValidatedInt(15, 128, 1, ValidatedNumber.WidgetType.TEXTBOX_WITH_BUTTONS)
+        var countMultiplier = ValidatedInt(12, 128, 1, ValidatedNumber.WidgetType.TEXTBOX_WITH_BUTTONS)
         var smallVegetationCountMultiplier = ValidatedInt(25, 128, 1, ValidatedNumber.WidgetType.TEXTBOX_WITH_BUTTONS)
-        var darkOakPenalty = ValidatedInt(7, 120, 1, ValidatedNumber.WidgetType.TEXTBOX_WITH_BUTTONS)
+        var darkOakPenalty = ValidatedInt(5, 120, 1, ValidatedNumber.WidgetType.TEXTBOX_WITH_BUTTONS)
         var darkOakFeatures = registryKey(VegetationPlacements.PALE_MOSS_PATCH, Registries.PLACED_FEATURE)
             .toSet(
                 VegetationPlacements.DARK_FOREST_VEGETATION,
@@ -80,7 +80,7 @@ class WFConfig : Config(id(MODID)) {
             ValidatedSet(setOf(Decoration.VEGETAL_DECORATION), ValidatedEnum(Decoration::class.java))
 
         @RequiresAction(Action.RESTART)
-        var envScanSteps = ValidatedInt(16, 64, 2)
+        var envScanSteps = ValidatedInt(12, 64, 2)
         var startingDepth = ValidatedInt(8, 32, 0)
         var bottomLayerOffset = ValidatedInt(40, 128, 0)
 //        var stepDivider = ValidatedInt(8, 16, 0)
