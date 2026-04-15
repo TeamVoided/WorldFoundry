@@ -59,7 +59,7 @@ class WFConfig : Config(id(MODID)) {
 
         var countMultiplier = ValidatedInt(12, 128, 1, ValidatedNumber.WidgetType.TEXTBOX_WITH_BUTTONS)
         var smallVegetationCountMultiplier = ValidatedInt(25, 128, 1, ValidatedNumber.WidgetType.TEXTBOX_WITH_BUTTONS)
-        var darkOakPenalty = ValidatedInt(5, 120, 1, ValidatedNumber.WidgetType.TEXTBOX_WITH_BUTTONS)
+        var darkOakPenalty = ValidatedInt(6, 120, 1, ValidatedNumber.WidgetType.TEXTBOX_WITH_BUTTONS)
         var darkOakFeatures = registryKey(VegetationPlacements.PALE_MOSS_PATCH, Registries.PLACED_FEATURE)
             .toSet(
                 VegetationPlacements.DARK_FOREST_VEGETATION,
