@@ -22,9 +22,9 @@ class WorldPresetTagsProvider(o: FabricDataOutput, p: CompletableFuture<HolderLo
     FabricTagProvider<WorldPreset>(o, Registries.WORLD_PRESET, p) {
 
     override fun addTags(arg: HolderLookup.Provider) {
-        builder(WorldPresetTags.NORMAL)
+        builder(WorldPresetTags.NORMAL).add(WFWorldPresets.MIXED_AMPLIFIED)
+        builder(WorldPresetTags.EXTENDED)
             .add(
-                WFWorldPresets.MIXED_AMPLIFIED,
                 WFWorldPresets.CAVE_WORLD,
                 WFWorldPresets.NOISE_WORLD
             )
