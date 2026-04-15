@@ -28,8 +28,11 @@ class WrappedRepeatingPlacement(val repeatingPlacement: RepeatingPlacement, val 
                 .group(
                     PlacementModifier.CODEC
                         .flatXmap({
-                            if (it is RepeatingPlacement) success(it)
-                            else DataResult.error { "PlacementModifier needs to be a RepeatingPlacement!" }
+                            when (it) {
+                                is WrappedRepeatingPlacement -> DataResult.error { "Can't nest WrappedRepeatingPlacement!" }
+                                is RepeatingPlacement -> success(it)
+                                else -> DataResult.error { "PlacementModifier needs to be a RepeatingPlacement!" }
+                            }
                         }, DataResult<RepeatingPlacement>::success)
                         .orElse(CountPlacement.of(1))
                         .fieldOf("repeating_placement").forGetter { it.repeatingPlacement },

@@ -174,7 +174,7 @@ object FeatureModifier {
 
         val modifiedPlacements = feature.placement.toMutableList()
         for ((idx, modifier) in feature.placement.withIndex()) {
-            if (modifier is RepeatingPlacement) {
+            if (modifier is CountPlacement) {
                 modifiedPlacements[idx] = WrappedRepeatingPlacement.of(modifier, getMultiplier(holder))
             }
 

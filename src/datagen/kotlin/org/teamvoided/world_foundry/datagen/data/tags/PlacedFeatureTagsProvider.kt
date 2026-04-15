@@ -16,19 +16,25 @@ class PlacedFeatureTagsProvider(o: FabricDataOutput, p: CompletableFuture<Holder
 
     override fun addTags(arg: HolderLookup.Provider) {
         builder(WFPlacesFeatureTags.DENY_UNDER_PLACEMENT)
-            .add(AquaticPlacements.SEAGRASS_WARM)
-            .add(AquaticPlacements.SEAGRASS_NORMAL)
-            .add(AquaticPlacements.SEAGRASS_COLD)
-            .add(AquaticPlacements.SEAGRASS_RIVER)
-            .add(AquaticPlacements.SEAGRASS_SWAMP)
-            .add(AquaticPlacements.SEAGRASS_DEEP_WARM)
-            .add(AquaticPlacements.SEAGRASS_DEEP)
-            .add(AquaticPlacements.SEAGRASS_DEEP_COLD)
-            .add(AquaticPlacements.SEA_PICKLE)
-            .add(AquaticPlacements.KELP_COLD)
-            .add(AquaticPlacements.KELP_WARM)
-            .add(AquaticPlacements.WARM_OCEAN_VEGETATION)
+            .add(
+                AquaticPlacements.SEAGRASS_WARM,
+                AquaticPlacements.SEAGRASS_NORMAL,
+                AquaticPlacements.SEAGRASS_COLD,
+                AquaticPlacements.SEAGRASS_RIVER,
+                AquaticPlacements.SEAGRASS_SWAMP,
+                AquaticPlacements.SEAGRASS_DEEP_WARM,
+                AquaticPlacements.SEAGRASS_DEEP,
+                AquaticPlacements.SEAGRASS_DEEP_COLD,
+                AquaticPlacements.SEA_PICKLE,
+                AquaticPlacements.KELP_COLD,
+                AquaticPlacements.KELP_WARM,
+                AquaticPlacements.WARM_OCEAN_VEGETATION,
+            )
             .add(MiscOverworldPlacements.LAKE_LAVA_SURFACE)
+            .add(
+                VegetationPlacements.FLOWER_FOREST_FLOWERS,
+                VegetationPlacements.FOREST_FLOWERS,
+            )
 
 
         builder(WFPlacesFeatureTags.SMALL_VEGETATION)
@@ -40,7 +46,6 @@ class PlacedFeatureTagsProvider(o: FabricDataOutput, p: CompletableFuture<Holder
                 VegetationPlacements.PATCH_PUMPKIN,
                 VegetationPlacements.PATCH_SUGAR_CANE,
                 VegetationPlacements.PATCH_FIREFLY_BUSH_NEAR_WATER,
-                VegetationPlacements.FOREST_FLOWERS,
                 VegetationPlacements.PATCH_BUSH,
                 VegetationPlacements.PATCH_GRASS_FOREST,
                 VegetationPlacements.WILDFLOWERS_BIRCH_FOREST,
@@ -55,7 +60,6 @@ class PlacedFeatureTagsProvider(o: FabricDataOutput, p: CompletableFuture<Holder
                 VegetationPlacements.FLOWER_WARM,
                 VegetationPlacements.PATCH_GRASS_JUNGLE,
                 VegetationPlacements.PATCH_MELON,
-                VegetationPlacements.FLOWER_FOREST_FLOWERS,
                 VegetationPlacements.FLOWER_FLOWER_FOREST,
                 VegetationPlacements.PATCH_TALL_GRASS,
                 VegetationPlacements.PATCH_GRASS_SAVANNA,
