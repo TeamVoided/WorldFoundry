@@ -144,7 +144,7 @@ object DensityFunctionProvider {
             constant(-0.703125)
         ).clamp(-64.0, 64.0)
 
-        val offset = densityFuns.holder(NoiseRouterData.OFFSET)
+        val offset = densityFuns.holder(WFDensityFunctions.OFFSET_MIX)
         val factor = densityFuns.holder(NoiseRouterData.FACTOR)
         val prelimSurf = preliminarySurfaceLevel(offset, factor, false)
 
