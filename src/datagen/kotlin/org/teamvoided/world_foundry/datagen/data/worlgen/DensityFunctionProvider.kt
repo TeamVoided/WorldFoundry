@@ -143,10 +143,12 @@ object DensityFunctionProvider {
             ),
             constant(-0.703125)
         ).clamp(-64.0, 64.0)
-        c.register(
-            WFDensityFunctions.I_D_W_J_NORMAL,
-            initialDensityWithoutJaggedness(false, idwjFlesh)
-        )
+
+        val offset = densityFuns.holder(NoiseRouterData.OFFSET)
+        val factor = densityFuns.holder(NoiseRouterData.FACTOR)
+        val prelimSurf = preliminarySurfaceLevel(offset, factor, false)
+
+        c.register(WFDensityFunctions.I_D_W_J_NORMAL, prelimSurf)
         c.register(
             WFDensityFunctions.I_D_W_J_AMPLIFIED,
             initialDensityWithoutJaggedness(true, idwjFlesh)
@@ -167,6 +169,51 @@ object DensityFunctionProvider {
         c.lavaCaves(noiseParams)
 
     }
+
+    fun preliminarySurfaceLevel(
+        offset: DensityFunction, factor: DensityFunction, amplified: Boolean,
+    ): DensityFunction {
+        val factor2D = cache2d(factor)
+        val offset2D = cache2d(offset)
+        var remappedClamp = remap(
+            add(
+                mul(constant(0.2734375), factor2D.invert()),
+                mul(constant(-1.0), offset2D)
+            ),
+            1.5,
+            -1.5,
+            -64.0,
+            320.0
+        )
+        remappedClamp = remappedClamp.clamp(-40.0, 320.0)
+        val slide = add(
+            NoiseRouterData.slideOverworld(
+                amplified,
+                add(
+                    NoiseRouterData.noiseGradientDensity(factor2D, offsetToDepth(offset2D)),
+                    constant(-0.703125)
+                ).clamp(-64.0, 64.0)
+            ),
+            constant(-0.390625)
+        )
+        return findTopSurface(
+            slide,
+            remappedClamp,
+            -64,
+            NoiseSettings.OVERWORLD_NOISE_SETTINGS.cellHeight
+        )
+    }
+
+    fun remap(densityFunction: DensityFunction, d: Double, e: Double, f: Double, g: Double): DensityFunction {
+        val h = (g - f) / (e - d)
+        val i = f - d * h
+        return add(mul(densityFunction, constant(h)), constant(i))
+    }
+
+    fun offsetToDepth(densityFunction: DensityFunction): DensityFunction {
+        return add(yClampedGradient(-64, 320, 1.5, -1.5), densityFunction)
+    }
+
 
     fun BootstrapContext<DensityFunction>.lavaCaves(noiseParams: HolderGetter<NormalNoise.NoiseParameters>) {
         register(
@@ -356,7 +403,7 @@ object DensityFunctionProvider {
             densityFuns.holder(WFDensityFunctions.EROSION_WF),
             densityFuns.holder(WFDensityFunctions.DEPTH_MIX),
             densityFuns.holder(NoiseRouterData.RIDGES),
-            densityFuns.holder(WFDensityFunctions.INITIAL_DENSITY_WITHOUT_JAGGEDNESS),
+            densityFuns.holder(WFDensityFunctions.I_D_W_J_NORMAL),
             densityFuns.holder(WFDensityFunctions.FINAL_DENSITY_MIX),
             oreVeininessFunction,
             veinFunction,
